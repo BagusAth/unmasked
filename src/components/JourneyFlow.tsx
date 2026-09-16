@@ -1,234 +1,200 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Shield, HeartHandshake, Compass, ArrowRight } from 'lucide-react';
+import { 
+  Sparkles, 
+  Smile, 
+  Archive, 
+  Flower2, 
+  Sprout, 
+  Check, 
+  ArrowRight 
+} from 'lucide-react';
 
-interface StageInfo {
-  stepNumber: string;
-  name: string;
-  question: string;
-  tagline: string;
+interface StepData {
+  number: string;
+  stepLabel: string;
+  title: string;
   description: string;
-  reflectionPrompt: string;
-  icon: React.ComponentType<{ className?: string; size?: number }>;
-  color: {
-    accent: string;
-    badgeBg: string;
-    badgeText: string;
-    border: string;
-  };
+  footerTag: string;
+  iconBg: string;
+  iconColor: string;
+  badgeColor: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
+  detailPrompt: string;
 }
 
-const STAGES: StageInfo[] = [
+const STEPS: StepData[] = [
   {
-    stepNumber: '01',
-    name: 'MASK',
-    question: 'What do I show?',
-    tagline: 'The curated outside self',
-    description:
-      'Explore the protective facade you put on every day—the constant "I\'m fine" smile, the perfectionist shield, or the habit of always pleasing others.',
-    reflectionPrompt: 'Which version of you does the outside world see most often?',
-    icon: Shield,
-    color: {
-      accent: 'text-indigo-600',
-      badgeBg: 'bg-indigo-50',
-      badgeText: 'text-indigo-700',
-      border: 'border-indigo-150',
-    },
+    number: '01',
+    stepLabel: 'LANGKAH 01',
+    title: 'Kenali Diri',
+    description: 'Menyadari apa yang kamu tampilkan dan apa yang kamu rasakan.',
+    footerTag: 'Sadari',
+    iconBg: 'bg-[#FEF3C7]',
+    iconColor: 'text-amber-600',
+    badgeColor: 'text-[#3B66D1]',
+    icon: Smile,
+    detailPrompt: 'Apa topeng perlindungan yang paling sering kamu kenakan di hadapan orang lain?',
   },
   {
-    stepNumber: '02',
-    name: 'LOAD',
-    question: 'What do I carry?',
-    tagline: 'The unspoken internal weight',
-    description:
-      'Gently unpack the burdens underneath your mask—unexpressed expectations, mental burnout, bottled emotions, and silent exhaustion.',
-    reflectionPrompt: 'What is taking the heaviest emotional toll on you lately?',
-    icon: Compass,
-    color: {
-      accent: 'text-amber-600',
-      badgeBg: 'bg-amber-50',
-      badgeText: 'text-amber-700',
-      border: 'border-amber-150',
-    },
+    number: '02',
+    stepLabel: 'LANGKAH 02',
+    title: 'Pilah Beban',
+    description: 'Pilah mana yang bisa dikendalikan, ditunda, atau dilepaskan.',
+    footerTag: 'Pilah',
+    iconBg: 'bg-[#E0F2FE]',
+    iconColor: 'text-sky-600',
+    badgeColor: 'text-[#3B66D1]',
+    icon: Archive,
+    detailPrompt: 'Beban emosional apa yang terasa paling menguras energimu akhir-akhir ini?',
   },
   {
-    stepNumber: '03',
-    name: 'NEED',
-    question: 'What do I need?',
-    tagline: 'The missing nourishment',
-    description:
-      'Pinpoint your unmet psychological and emotional needs—genuine rest, emotional validation, firm boundaries, or feeling truly heard.',
-    reflectionPrompt: 'If your heart had a quiet voice right now, what would it ask for?',
-    icon: HeartHandshake,
-    color: {
-      accent: 'text-emerald-600',
-      badgeBg: 'bg-emerald-50',
-      badgeText: 'text-emerald-700',
-      border: 'border-emerald-150',
-    },
+    number: '03',
+    stepLabel: 'LANGKAH 03',
+    title: 'Pahami Kebutuhan',
+    description: 'Pahami apa yang tubuh dan pikiranmu perlukan saat ini.',
+    footerTag: 'Relaksasi',
+    iconBg: 'bg-[#DCFCE7]',
+    iconColor: 'text-emerald-600',
+    badgeColor: 'text-[#D97706]',
+    icon: Flower2,
+    detailPrompt: 'Jika tubuh dan batinmu bisa bersuara pelan, apa pertolongan pertama yang diinginkannya?',
   },
   {
-    stepNumber: '04',
-    name: 'ACTION',
-    question: 'What can I do next?',
-    tagline: 'Gentle, realistic micro-steps',
-    description:
-      'Transform insights into compassionate micro-actions. No overwhelming to-do lists—just one achievable, grounded step to honor what you discovered.',
-    reflectionPrompt: 'What is one tiny, gentle boundary or self-care act you can take today?',
-    icon: Sparkles,
-    color: {
-      accent: 'text-sky-600',
-      badgeBg: 'bg-sky-50',
-      badgeText: 'text-sky-700',
-      border: 'border-sky-150',
-    },
+    number: '04',
+    stepLabel: 'LANGKAH 04',
+    title: 'Lakukan Aksi',
+    description: 'Satu langkah kecil yang realistis dalam waktu kurang dari 3 menit.',
+    footerTag: 'Pulihkan',
+    iconBg: 'bg-[#F0FDF4]',
+    iconColor: 'text-green-700',
+    badgeColor: 'text-[#16A34A]',
+    icon: Sprout,
+    detailPrompt: 'Tentukan 1 tindakan kecil yang paling mudah dilakukan hari ini untuk memulihkan diri.',
   },
 ];
 
 export const JourneyFlow: React.FC = () => {
-  const [activeStage, setActiveStage] = useState<number>(0);
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   return (
-    <section id="journey" className="w-full py-20">
-      <div className="mx-auto max-w-6xl px-6">
-        {/* Section Header */}
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DCDAD2] bg-white/60 px-3.5 py-1 text-xs font-medium tracking-wide text-[#68708A]">
-            <Sparkles size={13} className="text-amber-500" />
-            The UNMASKED Framework
-          </span>
-          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[#172033] sm:text-4xl">
-            A 4-step path beyond "I'm fine."
-          </h2>
-          <p className="mt-3 text-base leading-relaxed text-[#68708A]">
-            True self-awareness isn't about fixing yourself immediately. It begins with noticing
-            what you protect, what you carry, and what you genuinely require to heal.
-          </p>
+    <section id="alur" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20">
+      {/* Pill Section Header */}
+      <div>
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EFF4FE] px-3.5 py-1 text-[11px] font-bold text-[#3B66D1] tracking-wide uppercase">
+          <Sparkles size={12} className="text-[#3B66D1]" />
+          <span>ALUR</span>
         </div>
 
-        {/* Progress Timeline / Cards */}
-        <div className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
-          {STAGES.map((stage, idx) => {
-            const Icon = stage.icon;
-            const isSelected = activeStage === idx;
+        <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111827]">
+          4 langkah ringan dan menenangkan.
+        </h2>
+        <p className="mt-1 text-sm sm:text-base text-[#64748B]">
+          Selesai dalam 5 menit.
+        </p>
+      </div>
 
-            return (
-              <motion.div
-                key={stage.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.1 }}
-                onClick={() => setActiveStage(idx)}
-                className={`group relative cursor-pointer rounded-2xl border p-6 transition-all duration-300 ${
-                  isSelected
-                    ? 'border-[#172033] bg-white shadow-lg ring-1 ring-[#172033]/5'
-                    : 'border-[#E5E3DC] bg-white/70 hover:border-[#CAC7BE] hover:bg-white hover:shadow-sm'
-                }`}
-              >
-                {/* Step indicator header */}
-                <div className="flex items-center justify-between">
-                  <span className={`text-xs font-mono font-bold tracking-wider ${stage.color.accent}`}>
-                    STAGE {stage.stepNumber}
-                  </span>
-                  <div
-                    className={`flex h-8 w-8 items-center justify-center rounded-xl transition ${
-                      isSelected ? stage.color.badgeBg : 'bg-[#F2F1EC] group-hover:bg-[#EAE8E1]'
-                    }`}
-                  >
-                    <Icon
-                      size={16}
-                      className={isSelected ? stage.color.accent : 'text-[#68708A]'}
-                    />
+      {/* 4 Cards Horizontal Grid */}
+      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {STEPS.map((step, idx) => {
+          const Icon = step.icon;
+          const isSelected = selectedStep === idx;
+
+          return (
+            <motion.div
+              key={step.number}
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setSelectedStep(isSelected ? null : idx)}
+              className={`relative flex flex-col justify-between rounded-2xl border p-6 transition-all duration-200 cursor-pointer bg-white ${
+                isSelected
+                  ? 'border-[#284B3E] ring-2 ring-[#284B3E]/10 shadow-md'
+                  : 'border-[#ECECE8] hover:border-[#CBD5E1] shadow-2xs hover:shadow-sm'
+              }`}
+            >
+              <div>
+                {/* Top Row: Icon on left, Big Watermark Number on right */}
+                <div className="flex items-start justify-between">
+                  <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${step.iconBg} ${step.iconColor}`}>
+                    <Icon size={20} />
                   </div>
+                  <span className="text-4xl sm:text-5xl font-extrabold text-[#E5ECF8] select-none tracking-tight">
+                    {step.number}
+                  </span>
                 </div>
 
-                {/* Stage title & question */}
-                <div className="mt-5">
-                  <h3 className="text-xl font-bold tracking-tight text-[#172033]">
-                    {stage.name}
-                  </h3>
-                  <p className="mt-1 font-serif text-sm italic text-[#47526D]">
-                    "{stage.question}"
-                  </p>
-                </div>
+                {/* Subtitle / Step label */}
+                <span className={`block mt-4 text-[11px] font-bold tracking-wider uppercase ${step.badgeColor}`}>
+                  {step.stepLabel}
+                </span>
 
-                {/* Short tagline */}
-                <p className="mt-3 text-xs font-medium text-[#7C859F]">
-                  {stage.tagline}
-                </p>
+                {/* Title */}
+                <h3 className="mt-1 text-lg font-bold tracking-tight text-[#111827]">
+                  {step.title}
+                </h3>
 
                 {/* Description */}
-                <p className="mt-2 text-xs leading-relaxed text-[#68708A]">
-                  {stage.description}
+                <p className="mt-2 text-xs leading-relaxed text-[#5A6578]">
+                  {step.description}
                 </p>
+              </div>
 
-                {/* Subtle active indicator bar */}
-                <div
-                  className={`mt-6 h-1 w-full rounded-full transition-all duration-300 ${
-                    isSelected ? 'bg-[#172033]' : 'bg-transparent'
-                  }`}
-                />
-              </motion.div>
-            );
-          })}
-        </div>
+              {/* Bottom Tag / Chip */}
+              <div className="mt-6 pt-4 border-t border-[#F1F3F7] flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-[#526077]">
+                  <Check size={14} className="text-emerald-600 stroke-[2.5]" />
+                  <span>{step.footerTag}</span>
+                </div>
+                {isSelected && (
+                  <span className="text-[10px] text-[#284B3E] font-medium">Aktif</span>
+                )}
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
 
-        {/* Selected Stage Spotlight Highlight */}
+      {/* Expandable Step Prompt Details */}
+      {selectedStep !== null && (
         <motion.div
-          key={activeStage}
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-          className="mt-8 rounded-3xl border border-[#DCDAD2] bg-white p-7 sm:p-9 shadow-sm"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          className="mt-6 rounded-2xl border border-[#DCE4F2] bg-[#F7F9FD] p-5 sm:p-6"
         >
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
               <div className="flex items-center gap-2">
-                <span
-                  className={`inline-block rounded-md px-2.5 py-1 text-xs font-bold uppercase tracking-wider ${STAGES[activeStage].color.badgeBg} ${STAGES[activeStage].color.badgeText}`}
-                >
-                  Stage {STAGES[activeStage].stepNumber} Focus
+                <span className="rounded-md bg-blue-100 px-2.5 py-0.5 text-xs font-bold text-blue-800 uppercase">
+                  Langkah {STEPS[selectedStep].number}
                 </span>
-                <span className="text-xs text-[#8F96A9]">
-                  {STAGES[activeStage].tagline}
+                <span className="text-xs font-medium text-[#64748B]">
+                  Fokus Refleksi Terarah
                 </span>
               </div>
-              <h4 className="mt-3 text-2xl font-semibold tracking-tight text-[#172033]">
-                {STAGES[activeStage].question}
+              <h4 className="mt-2 text-lg font-semibold text-[#111827]">
+                "{STEPS[selectedStep].detailPrompt}"
               </h4>
-              <p className="mt-2 text-sm leading-relaxed text-[#56607A]">
-                {STAGES[activeStage].description}
-              </p>
-              <div className="mt-4 rounded-xl bg-[#F8F7F4] p-4 border border-[#EBE9E2]">
-                <p className="text-xs font-medium text-[#68708A] uppercase tracking-wider">
-                  Deep reflection question:
-                </p>
-                <p className="mt-1 text-sm font-medium text-[#172033]">
-                  "{STAGES[activeStage].reflectionPrompt}"
-                </p>
-              </div>
             </div>
 
-            {/* Quick transition hint */}
-            <div className="flex flex-col items-start gap-2 border-t border-[#EBE9E2] pt-4 md:border-t-0 md:border-l md:pl-8 md:pt-0">
-              <span className="text-xs text-[#8F96A9]">Next step in journey</span>
-              <div className="flex items-center gap-2 font-medium text-sm text-[#172033]">
-                <span>
-                  {activeStage < 3 ? STAGES[activeStage + 1].name : 'COMPLETION'}
-                </span>
-                <ArrowRight size={14} className="text-[#68708A]" />
-              </div>
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setActiveStage((prev) => (prev + 1) % STAGES.length)}
-                className="mt-2 text-xs font-semibold text-[#172033] underline underline-offset-4 hover:text-[#4F5B76]"
+                onClick={() => setSelectedStep(null)}
+                className="text-xs text-[#64748B] hover:text-[#111827] px-3 py-1.5 rounded-lg border border-neutral-300 bg-white"
               >
-                {activeStage < 3 ? 'Preview next step' : 'Review from Stage 1'}
+                Tutup
+              </button>
+              <button
+                onClick={() => setSelectedStep((prev) => ((prev ?? 0) + 1) % STEPS.length)}
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-[#284B3E] hover:bg-[#1E3A30] px-4 py-1.5 rounded-lg transition"
+              >
+                <span>Langkah Selanjutnya</span>
+                <ArrowRight size={13} />
               </button>
             </div>
           </div>
         </motion.div>
-      </div>
+      )}
     </section>
   );
 };
