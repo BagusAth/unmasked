@@ -21,8 +21,8 @@ const PHASE_SEQUENCE: BreathPhase[] = ['TARIK', 'TAHAN_1', 'HEMBUSKAN', 'TAHAN_2
 const SECONDS_PER_PHASE = 4;
 
 export const BreathingWidget: React.FC = () => {
-  const [phaseIndex, setPhaseIndex] = useState<number>(1); // starts at TAHAN like in screenshot
-  const [secondsLeft, setSecondsLeft] = useState<number>(3); // starts at 3d like in screenshot
+  const [timerState, setTimerState] = useState({ phaseIndex: 1, secondsLeft: 3 }); // starts at TAHAN 3d like in screenshot
+  const { phaseIndex, secondsLeft } = timerState;
   const [isActive, setIsActive] = useState<boolean>(true);
   const [soundEnabled, setSoundEnabled] = useState<boolean>(false);
 
@@ -30,13 +30,17 @@ export const BreathingWidget: React.FC = () => {
     if (!isActive) return;
 
     const timer = setInterval(() => {
-      setSecondsLeft((prev) => {
-        if (prev <= 1) {
-          // move to next phase
-          setPhaseIndex((currPhaseIdx) => (currPhaseIdx + 1) % PHASE_SEQUENCE.length);
-          return SECONDS_PER_PHASE;
+      setTimerState((prev) => {
+        if (prev.secondsLeft <= 1) {
+          return {
+            phaseIndex: (prev.phaseIndex + 1) % PHASE_SEQUENCE.length,
+            secondsLeft: SECONDS_PER_PHASE,
+          };
         }
-        return prev - 1;
+        return {
+          ...prev,
+          secondsLeft: prev.secondsLeft - 1,
+        };
       });
     }, 1000);
 
@@ -76,10 +80,10 @@ export const BreathingWidget: React.FC = () => {
             {/* Pill Tag */}
             <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs font-medium tracking-wide text-emerald-100 backdrop-blur-md border border-white/10">
               <span>Jeda Sejenak</span>
-              <button 
-                onClick={() => setSoundEnabled(!soundEnabled)} 
+              <button
+                onClick={() => setSoundEnabled(!soundEnabled)}
                 title={soundEnabled ? "Nonaktifkan suara" : "Aktifkan panduan"}
-                className="hover:text-white transition opacity-80 hover:opacity-100"
+                className="hover:text-white transition opacity-80 hover:opacity-100 cursor-pointer"
               >
                 {soundEnabled ? <Volume2 size={13} /> : <VolumeX size={13} />}
               </button>
@@ -95,26 +99,20 @@ export const BreathingWidget: React.FC = () => {
               Atur ritme napasmu sejenak untuk memulihkan rasa tenang.
             </p>
 
-            {/* Reassuring note pill */}
-            <div className="mt-6 inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-4 py-2 text-xs text-emerald-50/90 border border-white/10 backdrop-blur-xs">
-              <span>Ambil waktu sebanyak yang kamu perlukan. Di sini tidak ada yang memburumu.</span>
-            </div>
-
             {/* Control buttons */}
-            <div className="mt-5 flex items-center gap-3">
+            <div className="mt-[70px] flex items-center gap-3">
               <button
                 onClick={() => setIsActive(!isActive)}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-white/25 transition border border-white/15"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-white/25 transition border border-white/15 cursor-pointer"
               >
                 {isActive ? <Pause size={13} /> : <Play size={13} />}
                 <span>{isActive ? 'Jeda' : 'Lanjutkan'}</span>
               </button>
               <button
                 onClick={() => {
-                  setPhaseIndex(0);
-                  setSecondsLeft(SECONDS_PER_PHASE);
+                  setTimerState({ phaseIndex: 0, secondsLeft: SECONDS_PER_PHASE });
                 }}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-emerald-100/70 hover:text-white hover:bg-white/20 transition"
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-emerald-100/70 hover:text-white hover:bg-white/20 transition cursor-pointer"
               >
                 <RotateCcw size={12} />
                 <span>Ulangi</span>

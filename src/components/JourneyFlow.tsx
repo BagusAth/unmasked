@@ -53,7 +53,7 @@ const STEPS: StepData[] = [
     stepLabel: 'LANGKAH 03',
     title: 'Pahami Kebutuhan',
     description: 'Pahami apa yang tubuh dan pikiranmu perlukan saat ini.',
-    footerTag: 'Relaksasi',
+    footerTag: 'Validasi',
     iconBg: 'bg-[#DCFCE7]',
     iconColor: 'text-emerald-600',
     badgeColor: 'text-[#D97706]',
