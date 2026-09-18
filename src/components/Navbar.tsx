@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import logoImg from '../assets/unmasked-logo-notext.png';
+import { useLanguage } from '../context/LanguageContext';
+
+import { ID, GB } from 'country-flag-icons/react/3x2';
+
+const FlagID = () => <ID className="w-4 h-3 border border-gray-200" />;
+const FlagEN = () => <GB className="w-4 h-3 border border-gray-200" />;
 
 interface NavbarProps {
   onStartClick?: () => void;
@@ -10,7 +16,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [currentLang, setCurrentLang] = useState<'ID' | 'EN'>('ID');
+  const { language, setLanguage, t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-[#F0EFEB] transition-all">
@@ -36,33 +42,33 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
             href="/"
             className="rounded-full bg-[#E8EEFB] px-4 py-1.5 font-semibold text-[#2563EB] transition-colors"
           >
-            Beranda
+            {t('nav.home')}
           </a>
           <a
             href="#alur"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
-            Alur Refleksi
+            {t('nav.reflection_flow')}
           </a>
           <button
             onClick={onStartClick}
             disabled={isLoading}
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors cursor-pointer"
           >
-            Kanvas Refleksi
+            {t('nav.reflection_canvas')}
           </button>
           <a
             href="#privasi"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
-            Ruang Pribadi
+            {t('nav.private_space')}
           </a>
           <a
             href="#krisis"
             className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
             <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-            <span>Bantuan Krisis</span>
+            <span>{t('nav.crisis_help')}</span>
           </a>
         </nav>
 
@@ -74,8 +80,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
               onClick={() => setIsLangOpen(!isLangOpen)}
               className="flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#374151] hover:bg-neutral-50 shadow-2xs transition"
             >
-              <span>{currentLang === 'ID' ? '🇮🇩' : '🇬🇧'}</span>
-              <span>{currentLang}</span>
+              <div className="flex items-center justify-center w-5">
+                {language === 'ID' ? <FlagID /> : <FlagEN />}
+              </div>
+              <span>{language}</span>
               <ChevronDown size={13} className="text-[#6B7280]" />
             </button>
 
@@ -83,26 +91,30 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
               <div className="absolute right-0 mt-2 w-28 rounded-xl border border-neutral-200 bg-white py-1 shadow-lg z-50 text-xs">
                 <button
                   onClick={() => {
-                    setCurrentLang('ID');
+                    setLanguage('ID');
                     setIsLangOpen(false);
                   }}
                   className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 ${
-                    currentLang === 'ID' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
+                    language === 'ID' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
                   }`}
                 >
-                  <span>🇮🇩</span>
+                  <div className="flex items-center justify-center w-5">
+                    <FlagID />
+                  </div>
                   <span>Indonesia</span>
                 </button>
                 <button
                   onClick={() => {
-                    setCurrentLang('EN');
+                    setLanguage('EN');
                     setIsLangOpen(false);
                   }}
                   className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 ${
-                    currentLang === 'EN' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
+                    language === 'EN' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
                   }`}
                 >
-                  <span>🇬🇧</span>
+                  <div className="flex items-center justify-center w-5">
+                    <FlagEN />
+                  </div>
                   <span>English</span>
                 </button>
               </div>
@@ -127,14 +139,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
             onClick={() => setIsMobileMenuOpen(false)}
             className="block text-[#2563EB] font-semibold"
           >
-            Beranda
+            {t('nav.home')}
           </a>
           <a
             href="#alur"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block hover:text-[#111827]"
           >
-            Alur Refleksi
+            {t('nav.reflection_flow')}
           </a>
           <button
             onClick={() => {
@@ -143,14 +155,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
             }}
             className="block text-left w-full hover:text-[#111827]"
           >
-            Kanvas Refleksi
+            {t('nav.reflection_canvas')}
           </button>
           <a
             href="#privasi"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block hover:text-[#111827]"
           >
-            Ruang Pribadi
+            {t('nav.private_space')}
           </a>
           <a
             href="#krisis"
@@ -158,7 +170,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
             className="flex items-center gap-2 text-rose-600 font-semibold"
           >
             <span className="h-2 w-2 rounded-full bg-rose-500" />
-            <span>Bantuan Krisis</span>
+            <span>{t('nav.crisis_help')}</span>
           </a>
         </div>
       )}

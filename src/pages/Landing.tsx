@@ -15,9 +15,11 @@ import { BreathingWidget } from '../components/BreathingWidget';
 import { PrivacyNotice } from '../components/PrivacyNotice';
 import { Footer } from '../components/Footer';
 import { useSession } from '../hooks/useSession';
+import { useLanguage } from '../context/LanguageContext';
 
 const Landing: React.FC = () => {
   const { isLoading, error, startSession, clearError } = useSession();
+  const { t } = useLanguage();
 
   const handleStart = async (fallbackToLocal = false) => {
     await startSession({ fallbackToLocal });
@@ -51,9 +53,9 @@ const Landing: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-[#111827] leading-[1.15]"
+              style={{ whiteSpace: 'pre-line' }}
             >
-              Ruang untuk Memahami Apa<br />
-              yang Sebenarnya Kamu Rasakan.
+              {t('landing.hero_title')}
             </motion.h1>
 
             {/* Subtitle */}
@@ -63,7 +65,7 @@ const Landing: React.FC = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mx-auto mt-4 max-w-xl text-base sm:text-lg text-[#525F7F] font-normal leading-relaxed"
             >
-              Memahami Diri di Balik Kalimat "Aku Baik-Baik Saja"
+              {t('landing.hero_subtitle')}
             </motion.p>
 
             {/* Error Banner & Fallback Option if connection fails */}
@@ -77,7 +79,7 @@ const Landing: React.FC = () => {
                   <AlertCircle size={18} className="mt-0.5 shrink-0 text-rose-600" />
                   <div className="flex-1">
                     <p className="font-semibold text-rose-900">
-                      Gagal Menghubungkan ke Server
+                      {t('landing.server_error')}
                     </p>
                     <p className="mt-1 text-rose-700 leading-normal">
                       {error}
@@ -88,19 +90,19 @@ const Landing: React.FC = () => {
                         className="inline-flex items-center gap-1.5 rounded-lg bg-rose-700 px-3 py-1.5 font-medium text-white transition hover:bg-rose-800"
                       >
                         <RefreshCw size={12} />
-                        Coba Lagi
+                        {t('landing.try_again')}
                       </button>
                       <button
                         onClick={() => handleStart(true)}
                         className="inline-flex items-center gap-1.5 rounded-lg border border-rose-300 bg-white px-3 py-1.5 font-medium text-rose-800 transition hover:bg-rose-50"
                       >
-                        Lanjut Sesi Offline
+                        {t('landing.offline_session')}
                       </button>
                       <button
                         onClick={clearError}
                         className="text-rose-600 underline underline-offset-2 hover:text-rose-800 ml-2"
                       >
-                        Tutup
+                        {t('landing.close')}
                       </button>
                     </div>
                   </div>
@@ -125,12 +127,12 @@ const Landing: React.FC = () => {
                 {isLoading ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                    <span>Mempersiapkan ruang...</span>
+                    <span>{t('landing.preparing_space')}</span>
                   </>
                 ) : (
                   <>
                     <Sparkles size={16} className="text-emerald-200" />
-                    <span>Mulai Refleksi</span>
+                    <span>{t('landing.start_reflection')}</span>
                   </>
                 )}
               </button>
@@ -140,7 +142,7 @@ const Landing: React.FC = () => {
                 href="#alur"
                 className="inline-flex items-center gap-2 rounded-full border border-[#D8DBE2] bg-white hover:bg-[#FAF9F5] px-6 py-3.5 text-sm font-medium text-[#334155] shadow-2xs transition-all hover:border-[#CBD5E1]"
               >
-                <span>Pelajari Cara Kerjanya</span>
+                <span>{t('landing.how_it_works')}</span>
                 <ChevronDown size={15} className="text-[#64748B]" />
               </a>
             </motion.div>
@@ -153,7 +155,7 @@ const Landing: React.FC = () => {
               className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#DFE3EA] bg-white/80 px-4 py-1.5 text-xs text-[#525F7F] shadow-2xs"
             >
               <ShieldCheck size={14} className="text-[#10B981]" />
-              <span>100% Anonim | Tanpa Login</span>
+              <span>{t('landing.trust_badge')}</span>
             </motion.div>
           </div>
         </section>
@@ -176,12 +178,12 @@ const Landing: React.FC = () => {
             <div className="max-w-xl">
               {/* Badge */}
               <span className="inline-block rounded-full bg-white/10 px-3.5 py-1 text-xs font-medium text-emerald-100 backdrop-blur-xs border border-white/10">
-                Waktu Terbaikmu Telah Tiba
+                {t('landing.best_time_badge')}
               </span>
 
               {/* Heading */}
-              <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-white">
-                Beri dirimu ruang untuk menjadi<br className="hidden sm:inline" /> dirimu sendiri
+              <h2 className="mt-4 text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight leading-tight text-white" style={{ whiteSpace: 'pre-line' }}>
+                {t('landing.best_time_title')}
               </h2>
             </div>
 
@@ -192,7 +194,7 @@ const Landing: React.FC = () => {
                 disabled={isLoading}
                 className="inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-neutral-100 text-[#172033] font-bold px-8 py-3.5 text-sm shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-70"
               >
-                <span>Mulai</span>
+                <span>{t('landing.start_btn')}</span>
                 <ArrowRight size={16} className="text-[#172033]" />
               </button>
             </div>

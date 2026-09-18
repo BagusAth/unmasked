@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Home",
+    "reflection_flow": "Reflection Flow",
+    "reflection_canvas": "Reflection Canvas",
+    "private_space": "Private Space",
+    "crisis_help": "Crisis Help"
+  },
+  "landing": {
+    "hero_title": "A Space to Understand What\nYou Truly Feel.",
+    "hero_subtitle": "Understanding Yourself Beyond \"I'm Fine\"",
+    "start_reflection": "Start Reflection",
+    "preparing_space": "Preparing space...",
+    "how_it_works": "Learn How It Works",
+    "trust_badge": "100% Anonymous | No Login",
+    "server_error": "Failed to Connect to Server",
+    "try_again": "Try Again",
+    "offline_session": "Continue Offline Session",
+    "close": "Close",
+    "best_time_badge": "Your Best Time Has Arrived",
+    "best_time_title": "Give yourself the space to be\nwho you are",
+    "start_btn": "Start"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "reflection_flow": "Alur Refleksi",
+    "reflection_canvas": "Kanvas Refleksi",
+    "private_space": "Ruang Pribadi",
+    "crisis_help": "Bantuan Krisis"
+  },
+  "landing": {
+    "hero_title": "Ruang untuk Memahami Apa\nyang Sebenarnya Kamu Rasakan.",
+    "hero_subtitle": "Memahami Diri di Balik Kalimat \"Aku Baik-Baik Saja\"",
+    "start_reflection": "Mulai Refleksi",
+    "preparing_space": "Mempersiapkan ruang...",
+    "how_it_works": "Pelajari Cara Kerjanya",
+    "trust_badge": "100% Anonim | Tanpa Login",
+    "server_error": "Gagal Menghubungkan ke Server",
+    "try_again": "Coba Lagi",
+    "offline_session": "Lanjut Sesi Offline",
+    "close": "Tutup",
+    "best_time_badge": "Waktu Terbaikmu Telah Tiba",
+    "best_time_title": "Beri dirimu ruang untuk menjadi\ndirimu sendiri",
+    "start_btn": "Mulai"
+  }
+}
