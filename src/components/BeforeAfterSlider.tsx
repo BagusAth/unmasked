@@ -89,8 +89,8 @@ export const BeforeAfterSlider: React.FC = () => {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="w-full h-[200vh] mt-12 sm:mt-16 relative">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center pt-16 sm:pt-20">
+    <div ref={wrapperRef} className="w-full h-[200vh] mt-16 relative">
+      <div className="sticky top-24 sm:top-32 w-full">
         <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
           {/* Main Container Card */}
           <div

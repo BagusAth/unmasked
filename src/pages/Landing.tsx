@@ -12,7 +12,6 @@ import { Navbar } from '../components/Navbar';
 import { BeforeAfterSlider } from '../components/BeforeAfterSlider';
 import { JourneyFlow } from '../components/JourneyFlow';
 import { BreathingWidget } from '../components/BreathingWidget';
-import { PrivacyNotice } from '../components/PrivacyNotice';
 import { Footer } from '../components/Footer';
 import { useSession } from '../hooks/useSession';
 import { useLanguage } from '../context/LanguageContext';
@@ -150,20 +149,17 @@ const Landing: React.FC = () => {
           </div>
         </section>
 
-        {/* 3. INTERACTIVE BEFORE/AFTER SPLIT SLIDER */}
-        <BeforeAfterSlider />
-
-        {/* 4. 4 STEPS JOURNEY SECTION */}
+        {/* 3. 4 STEPS JOURNEY SECTION */}
         <JourneyFlow />
 
-        {/* 5. BOX BREATHING EXERCISE WIDGET */}
+        {/* 4. BOX BREATHING EXERCISE WIDGET */}
         <BreathingWidget />
 
-        {/* 6. PRIVACY NOTICE SECTION */}
-        <PrivacyNotice />
+        {/* 5. INTERACTIVE BEFORE/AFTER SPLIT SLIDER */}
+        <BeforeAfterSlider />
 
         {/* 7. BOTTOM CALL TO ACTION BANNER */}
-        <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20">
+        <section className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-16">
           <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-r from-[#284B3E] via-[#244437] to-[#1F392E] p-8 sm:p-12 text-white shadow-md border border-[#3A6155]/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div className="max-w-xl">
               {/* Badge */}
