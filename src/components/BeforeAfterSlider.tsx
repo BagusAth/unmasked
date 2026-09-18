@@ -1,14 +1,14 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
-import { 
-  Clock, 
-  Heart, 
-  BatteryMedium, 
-  HelpCircle, 
-  Moon, 
-  Brain, 
-  EyeOff, 
-  Flame, 
+import {
+  Smile,
+  ShieldCheck,
+  BatteryMedium,
+  Coffee,
+  MicOff,
+  Moon,
+  Brain,
   Sparkles,
+  Flame,
   MoveHorizontal
 } from 'lucide-react';
 
@@ -22,7 +22,7 @@ export const BeforeAfterSlider: React.FC = () => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
-    const percentage = Math.max(5, Math.min(95, (x / rect.width) * 100));
+    const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPosition(percentage);
   }, []);
 
@@ -60,7 +60,6 @@ export const BeforeAfterSlider: React.FC = () => {
       {/* Header prompt above card */}
       <div className="text-center mb-5">
         <p className="text-sm sm:text-base font-medium text-[#4B5565] flex items-center justify-center gap-2">
-          <MoveHorizontal size={16} className="text-[#64748B]" />
           <span>Geser untuk melihat sisi yang jarang ditunjukkan</span>
         </p>
       </div>
@@ -70,13 +69,13 @@ export const BeforeAfterSlider: React.FC = () => {
         ref={containerRef}
         className="relative w-full h-[520px] sm:h-[460px] md:h-[420px] rounded-[28px] overflow-hidden border border-[#E2E8F0] shadow-sm select-none bg-[#0F172A]"
       >
-        {/* RIGHT SIDE (SISI BATIN / YANG DIRASAKAN - DARK THEME) */}
+        {/* RIGHT SIDE (REALITA BATIN / YANG DIRASAKAN - DARK THEME) */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#111927] via-[#0F172A] to-[#0A0F1D] text-white p-6 sm:p-8 flex flex-col justify-between">
           <div>
             {/* Top Row */}
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-950/60 px-3 py-1 text-[11px] font-semibold tracking-wider text-indigo-300 uppercase">
-                Sisi Batin (Yang Dirasakan)
+                Realita Batin (Yang Dirasakan)
               </span>
               <div className="flex items-center gap-2 text-amber-200/90">
                 <Moon size={20} className="fill-amber-300/20 text-amber-300" />
@@ -84,44 +83,20 @@ export const BeforeAfterSlider: React.FC = () => {
             </div>
 
             <h3 className="mt-3 text-xl sm:text-2xl font-bold tracking-tight text-white">
-              Apa yang Sebenarnya Terjadi di Dalam
+              Kelelahan Ekstrem & Tertekan
             </h3>
 
             {/* 4 Cards Grid - Inner Reality */}
             <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl">
               <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 sm:p-4 backdrop-blur-md">
-                <div className="flex items-center gap-2 text-rose-300">
-                  <Brain size={16} />
-                  <h4 className="text-xs sm:text-sm font-semibold text-white">
-                    Kelelahan Mental Mendalam
-                  </h4>
-                </div>
-                <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
-                  Pikiran berputar tanpa jeda, merasa harus selalu siaga dan sempurna tanpa kesempatan bernapas lega.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 sm:p-4 backdrop-blur-md">
-                <div className="flex items-center gap-2 text-indigo-300">
-                  <EyeOff size={16} />
-                  <h4 className="text-xs sm:text-sm font-semibold text-white">
-                    Sepi di Tengah Keramaian
-                  </h4>
-                </div>
-                <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
-                  Tersenyum dan hadir untuk semua orang, tapi merasa tidak ada yang sungguh-sungguh mengenali rasa lelahmu.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 sm:p-4 backdrop-blur-md">
                 <div className="flex items-center gap-2 text-amber-300">
-                  <Flame size={16} />
+                  <BatteryMedium size={16} />
                   <h4 className="text-xs sm:text-sm font-semibold text-white">
-                    Beban Ekspektasi Berlebih
+                    Energi Terkuras
                   </h4>
                 </div>
                 <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
-                  Takut mengecewakan siapapun hingga terbiasa mengabaikan sinyal tubuh dan kesehatan mental sendiri.
+                  Lelah luar biasa hanya ingin semuanya selesai, tanpa peduli hasilnya.
                 </p>
               </div>
 
@@ -129,11 +104,35 @@ export const BeforeAfterSlider: React.FC = () => {
                 <div className="flex items-center gap-2 text-emerald-300">
                   <Sparkles size={16} />
                   <h4 className="text-xs sm:text-sm font-semibold text-white">
-                    Rindu Ruang Tanpa Penilaian
+                    Beban Ekspektasi
                   </h4>
                 </div>
                 <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
-                  Hanya mendambakan momen tenang untuk mengakui ketidakberdayaan tanpa dicap lemah atau gagal.
+                  Sudah berusaha maksimal, tetapi hasilnya belum sesuai harapan.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 sm:p-4 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-amber-300">
+                  <Brain size={16} />
+                  <h4 className="text-xs sm:text-sm font-semibold text-white">
+                    Kelelahan Mental
+                  </h4>
+                </div>
+                <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
+                  Takut mengecewakan siapapun hingga terbiasa mengabaikan kesehatan mental.
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-3.5 sm:p-4 backdrop-blur-md">
+                <div className="flex items-center gap-2 text-emerald-300">
+                  <Flame size={16} />
+                  <h4 className="text-xs sm:text-sm font-semibold text-white">
+                    Tertekan
+                  </h4>
+                </div>
+                <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-slate-300">
+                  Terus dikejar tugas yang seolah tidak pernah selesai.
                 </p>
               </div>
             </div>
@@ -159,50 +158,50 @@ export const BeforeAfterSlider: React.FC = () => {
               {/* 4 Cards Grid - Social Mask */}
               <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 max-w-3xl">
                 <div className="rounded-2xl border border-white/80 bg-white/75 p-3.5 sm:p-4 shadow-2xs backdrop-blur-xs">
-                  <div className="flex items-center gap-2 text-amber-600">
-                    <Clock size={16} />
+                  <div className="flex items-center gap-2 text-sky-600">
+                    <Sparkles size={16} />
                     <h4 className="text-xs sm:text-sm font-semibold text-[#1E293B]">
-                      Sibuk Pukul 09.00 Dini Hari
+                      Tetap Tersenyum
                     </h4>
                   </div>
                   <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-[#5A6578]">
-                    Menyibukkan diri dengan target dan memuaskan ekspektasi orang yang selalu menuntut hasil maksimal.
+                    Berusaha terlihat santai dan baik-baik saja, meski sebenarnya tidak.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/80 bg-white/75 p-3.5 sm:p-4 shadow-2xs backdrop-blur-xs">
                   <div className="flex items-center gap-2 text-rose-500">
-                    <Heart size={16} />
+                    <Flame size={16} />
                     <h4 className="text-xs sm:text-sm font-semibold text-[#1E293B]">
-                      Kebaikan yang Terus Menawar
+                      Selalu Bisa Diandalkan
                     </h4>
                   </div>
                   <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-[#5A6578]">
-                    Bisa membantu siapa saja dan selalu siap sedia, namun selalu mengabaikan kebaikan untuk diri sendiri.
+                    Tetap bilang “bisa” meski sebenarnya tenaga sendiri sudah hampir habis.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/80 bg-white/75 p-3.5 sm:p-4 shadow-2xs backdrop-blur-xs">
                   <div className="flex items-center gap-2 text-sky-600">
-                    <BatteryMedium size={16} />
+                    <Coffee size={16} />
                     <h4 className="text-xs sm:text-sm font-semibold text-[#1E293B]">
-                      Energi Semakin Habis
+                      Bersikap Biasa
                     </h4>
                   </div>
                   <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-[#5A6578]">
-                    Tetap tersenyum lebar hanya ingin urusan lekas selesai, tanpa ingin merepotkan atau membebani siapapun.
+                    Terlihat tenang, seolah tidak ada yang mengganggu pikiran.
                   </p>
                 </div>
 
                 <div className="rounded-2xl border border-white/80 bg-white/75 p-3.5 sm:p-4 shadow-2xs backdrop-blur-xs">
-                  <div className="flex items-center gap-2 text-emerald-600">
-                    <HelpCircle size={16} />
+                  <div className="flex items-center gap-2 text-rose-600">
+                    <MicOff size={16} />
                     <h4 className="text-xs sm:text-sm font-semibold text-[#1E293B]">
-                      Kejenuhan yang Tersembunyi
+                      Tidak Bercerita
                     </h4>
                   </div>
                   <p className="mt-1.5 text-[11px] sm:text-xs leading-relaxed text-[#5A6578]">
-                    Takut mengaku kewalahan atau butuh bantuan karena khawatir dinilai tidak tangguh dan rentan.
+                    Tidak membahas masalah pribadi karena takut merepotkan orang lain.
                   </p>
                 </div>
               </div>
