@@ -69,7 +69,7 @@ export const BreathingWidget: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-16">
+    <div id="breathing" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-16 scroll-mt-28">
       <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#2E4E44] via-[#28453C] to-[#223B33] text-white p-8 sm:p-12 shadow-lg border border-[#3A6155]/40">
         {/* Ambient subtle glow behind breathing circle */}
         <div className="pointer-events-none absolute right-10 top-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-emerald-400/10 blur-3xl" />

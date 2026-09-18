@@ -27,7 +27,7 @@ const Landing: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FDFCF9] text-[#111827] flex flex-col font-sans selection:bg-[#284B3E]/15 selection:text-[#172033]">
       {/* 1. TOP NAVIGATION */}
-      <Navbar onStartClick={() => handleStart(false)} isLoading={isLoading} />
+      <Navbar />
 
       <main className="flex-1 pb-12">
         {/* 2. HERO SECTION */}

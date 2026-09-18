@@ -78,7 +78,7 @@ export const JourneyFlow: React.FC = () => {
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
 
   return (
-    <section id="alur" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20">
+    <section id="alur" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20 scroll-mt-28">
       {/* Pill Section Header */}
       <div>
         <div className="inline-flex items-center gap-1.5 rounded-full bg-[#EFF4FE] px-3.5 py-1 text-[11px] font-bold text-[#3B66D1] tracking-wide uppercase">
@@ -87,7 +87,7 @@ export const JourneyFlow: React.FC = () => {
         </div>
 
         <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111827]">
-          4 Langkah Ringan dan Menenangkan
+          Empat Langkah Ringan
         </h2>
         <p className="mt-1 text-sm sm:text-base text-[#64748B]">
           Selesai dalam 5 menit

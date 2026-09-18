@@ -8,12 +8,7 @@ import { ID, GB } from 'country-flag-icons/react/3x2';
 const FlagID = () => <ID className="w-4 h-3 border border-gray-200" />;
 const FlagEN = () => <GB className="w-4 h-3 border border-gray-200" />;
 
-interface NavbarProps {
-  onStartClick?: () => void;
-  isLoading?: boolean;
-}
-
-export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false }) => {
+export const Navbar: React.FC = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
@@ -50,25 +45,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
           >
             {t('nav.reflection_flow')}
           </a>
-          <button
-            onClick={onStartClick}
-            disabled={isLoading}
-            className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors cursor-pointer"
-          >
-            {t('nav.reflection_canvas')}
-          </button>
           <a
-            href="#privasi"
+            href="#breathing"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
-            {t('nav.private_space')}
-          </a>
-          <a
-            href="#krisis"
-            className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
-          >
-            <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
-            <span>{t('nav.crisis_help')}</span>
+            Box Breathing
           </a>
         </nav>
 
@@ -78,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
           <div className="relative">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className="flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#374151] hover:bg-neutral-50 shadow-2xs transition"
+              className="flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#374151] hover:bg-neutral-50 shadow-2xs transition cursor-pointer"
             >
               <div className="flex items-center justify-center w-5">
                 {language === 'ID' ? <FlagID /> : <FlagEN />}
@@ -94,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
                     setLanguage('ID');
                     setIsLangOpen(false);
                   }}
-                  className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 ${
+                  className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 cursor-pointer ${
                     language === 'ID' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
                   }`}
                 >
@@ -108,7 +89,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
                     setLanguage('EN');
                     setIsLangOpen(false);
                   }}
-                  className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 ${
+                  className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 cursor-pointer ${
                     language === 'EN' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
                   }`}
                 >
@@ -148,29 +129,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
           >
             {t('nav.reflection_flow')}
           </a>
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onStartClick?.();
-            }}
-            className="block text-left w-full hover:text-[#111827]"
-          >
-            {t('nav.reflection_canvas')}
-          </button>
           <a
-            href="#privasi"
+            href="#breathing"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block hover:text-[#111827]"
           >
-            {t('nav.private_space')}
-          </a>
-          <a
-            href="#krisis"
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-2 text-rose-600 font-semibold"
-          >
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
-            <span>{t('nav.crisis_help')}</span>
+            Box Breathing
           </a>
         </div>
       )}

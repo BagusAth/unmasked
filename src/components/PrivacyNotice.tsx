@@ -14,7 +14,7 @@ export const PrivacyNotice: React.FC = () => {
   };
 
   return (
-    <section id="privasi" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20">
+    <section id="privasi" className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-20 scroll-mt-28">
       {/* Outer Ice-Blue Lavender Container */}
       <div className="rounded-[32px] bg-[#EFF3FD] border border-[#DEE7F8] p-8 sm:p-12">
         {/* Header */}

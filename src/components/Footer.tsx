@@ -7,9 +7,8 @@ export const Footer: React.FC = () => {
   return (
     <>
       {/* CRISIS HOTLINE STRIP (PRE-FOOTER) */}
-      <section id="krisis" className="w-full px-4 sm:px-6 mt-16 mb-8">
+      <section id="krisis" className="w-full px-4 sm:px-6 mt-16 mb-8 scroll-mt-28">
         <div className="mx-auto max-w-5xl rounded-2xl bg-[#FFF0EB] border border-[#FDDCD0] px-5 py-3.5 text-center text-xs text-[#9A3412] flex flex-wrap items-center justify-center gap-2 shadow-2xs">
-          <span className="text-base leading-none">🚨</span>
           <span className="font-medium">
             Sedang menghadapi situasi darurat?
           </span>
