@@ -87,10 +87,10 @@ export const JourneyFlow: React.FC = () => {
         </div>
 
         <h2 className="mt-3 text-3xl sm:text-4xl font-semibold tracking-tight text-[#111827]">
-          4 langkah ringan dan menenangkan.
+          4 Langkah Ringan dan Menenangkan
         </h2>
         <p className="mt-1 text-sm sm:text-base text-[#64748B]">
-          Selesai dalam 5 menit.
+          Selesai dalam 5 menit
         </p>
       </div>
 
@@ -107,8 +107,8 @@ export const JourneyFlow: React.FC = () => {
               transition={{ duration: 0.2 }}
               onClick={() => setSelectedStep(isSelected ? null : idx)}
               className={`relative flex flex-col justify-between rounded-2xl border p-6 transition-all duration-200 cursor-pointer bg-white ${isSelected
-                  ? 'border-[#284B3E] ring-2 ring-[#284B3E]/10 shadow-md'
-                  : 'border-[#ECECE8] hover:border-[#CBD5E1] shadow-2xs hover:shadow-sm'
+                ? 'border-[#284B3E] ring-2 ring-[#284B3E]/10 shadow-md'
+                : 'border-[#ECECE8] hover:border-[#CBD5E1] shadow-2xs hover:shadow-sm'
                 }`}
             >
               <div>

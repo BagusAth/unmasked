@@ -16,6 +16,7 @@ export const BeforeAfterSlider: React.FC = () => {
   // Slider percentage from 0 to 100 (default at 60% showing mostly the left mask)
   const [sliderPosition, setSliderPosition] = useState<number>(68);
   const [isDragging, setIsDragging] = useState<boolean>(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleMove = useCallback((clientX: number) => {
@@ -55,20 +56,47 @@ export const BeforeAfterSlider: React.FC = () => {
     };
   }, [isDragging, handleMouseMove, handleTouchMove, handleInteractionEnd]);
 
-  return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 mt-14">
-      {/* Header prompt above card */}
-      <div className="text-center mb-5">
-        <p className="text-sm sm:text-base font-medium text-[#4B5565] flex items-center justify-center gap-2">
-          <span>Geser untuk melihat sisi yang jarang ditunjukkan</span>
-        </p>
-      </div>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!wrapperRef.current) return;
+      const wrapperRect = wrapperRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // The sticky wrapper starts sticking when its top hits 0
+      // It stops sticking when its bottom hits windowHeight
+      const scrolledPast = -wrapperRect.top;
+      const totalStickyScroll = wrapperRect.height - windowHeight;
+      
+      let progress = 0;
+      if (totalStickyScroll > 0) {
+        if (scrolledPast < 0) {
+          progress = 0;
+        } else if (scrolledPast > totalStickyScroll) {
+          progress = 1;
+        } else {
+          progress = scrolledPast / totalStickyScroll;
+        }
+      }
+      
+      setSliderPosition(progress * 100);
+    };
 
-      {/* Main Container Card */}
-      <div
-        ref={containerRef}
-        className="relative w-full h-[520px] sm:h-[460px] md:h-[420px] rounded-[28px] overflow-hidden border border-[#E2E8F0] shadow-sm select-none bg-[#0F172A]"
-      >
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to set initial position
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div ref={wrapperRef} className="w-full h-[200vh] mt-12 sm:mt-16 relative">
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center pt-16 sm:pt-20">
+        <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
+          {/* Main Container Card */}
+          <div
+            ref={containerRef}
+            className="relative w-full h-[520px] sm:h-[460px] md:h-[420px] rounded-[28px] overflow-hidden border border-[#E2E8F0] shadow-sm select-none bg-[#0F172A]"
+          >
         {/* RIGHT SIDE (REALITA BATIN / YANG DIRASAKAN - DARK THEME) */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#111927] via-[#0F172A] to-[#0A0F1D] text-white p-6 sm:p-8 flex flex-col justify-between">
           <div>
@@ -207,12 +235,6 @@ export const BeforeAfterSlider: React.FC = () => {
               </div>
             </div>
 
-            {/* Hint pill at bottom */}
-            <div className="mt-4 flex items-center">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 border border-[#CBD5E1]/60 px-3 py-1 text-[11px] font-medium text-[#475569] shadow-2xs">
-                ← Geser pembatas untuk melihat kedua sisi →
-              </span>
-            </div>
           </div>
         </div>
 
@@ -230,6 +252,8 @@ export const BeforeAfterSlider: React.FC = () => {
           <div className="absolute flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#172033] shadow-lg border border-[#CBD5E1] transition-transform group-hover:scale-110 active:scale-95">
             <MoveHorizontal size={16} className="text-[#334155]" />
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
