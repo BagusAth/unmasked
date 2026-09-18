@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { 
-  Sparkles, 
-  ChevronDown, 
-  ShieldCheck, 
-  ArrowRight, 
-  AlertCircle, 
-  RefreshCw 
+import {
+  Sparkles,
+  ChevronDown,
+  ShieldCheck,
+  ArrowRight,
+  AlertCircle,
+  RefreshCw
 } from 'lucide-react';
 import { Navbar } from '../components/Navbar';
 import { BeforeAfterSlider } from '../components/BeforeAfterSlider';
@@ -32,21 +32,11 @@ const Landing: React.FC = () => {
 
       <main className="flex-1 pb-12">
         {/* 2. HERO SECTION */}
-        <section className="relative px-4 sm:px-6 pt-12 pb-10 sm:pt-16 sm:pb-12 text-center overflow-hidden">
+        <section className="relative px-4 sm:px-6 pt-20 pb-10 sm:pt-28 sm:pb-12 text-center overflow-hidden">
           {/* Subtle Ambient Radial Glow */}
           <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[420px] w-[650px] -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-50/40 via-blue-50/25 to-transparent blur-3xl" />
 
           <div className="mx-auto max-w-4xl">
-            {/* Top Dot Indicator */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4 }}
-              className="inline-flex items-center justify-center p-1 rounded-full bg-emerald-100/50 mb-6"
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[#10B981]" />
-            </motion.div>
-
             {/* Main Headline */}
             <motion.h1
               initial={{ opacity: 0, y: 15 }}

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { 
-  Sparkles, 
-  Smile, 
-  Archive, 
-  Flower2, 
-  Sprout, 
-  Check, 
-  ArrowRight 
+import {
+  Sparkles,
+  Smile,
+  Archive,
+  Flower2,
+  Sprout,
+  Check,
+  ArrowRight
 } from 'lucide-react';
 
 interface StepData {
@@ -106,11 +106,10 @@ export const JourneyFlow: React.FC = () => {
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
               onClick={() => setSelectedStep(isSelected ? null : idx)}
-              className={`relative flex flex-col justify-between rounded-2xl border p-6 transition-all duration-200 cursor-pointer bg-white ${
-                isSelected
+              className={`relative flex flex-col justify-between rounded-2xl border p-6 transition-all duration-200 cursor-pointer bg-white ${isSelected
                   ? 'border-[#284B3E] ring-2 ring-[#284B3E]/10 shadow-md'
                   : 'border-[#ECECE8] hover:border-[#CBD5E1] shadow-2xs hover:shadow-sm'
-              }`}
+                }`}
             >
               <div>
                 {/* Top Row: Icon on left, Big Watermark Number on right */}
