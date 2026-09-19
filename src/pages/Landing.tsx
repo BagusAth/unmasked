@@ -32,8 +32,7 @@ const Landing: React.FC = () => {
       <main className="flex-1 pb-12">
         {/* 2. HERO SECTION */}
         <section className="relative px-4 sm:px-6 pt-20 pb-10 sm:pt-28 sm:pb-12 text-center overflow-hidden">
-          {/* Subtle Ambient Radial Glow */}
-          <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-[420px] w-[650px] -translate-x-1/2 rounded-full bg-gradient-to-b from-emerald-50/40 via-blue-50/25 to-transparent blur-3xl" />
+          {/* Subtle Ambient Radial Glow - Removed per antislop rules (R-01) */}
 
           <div className="mx-auto max-w-4xl">
             {/* Main Headline */}
