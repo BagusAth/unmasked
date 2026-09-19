@@ -15,24 +15,8 @@ export function AmbientPlayer() {
   const noiseNodeRef = useRef<AudioNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
 
-  useEffect(() => {
-    if (isPlaying) {
-      startAmbientAudio();
-    } else {
-      stopAmbientAudio();
-    }
-    return () => {
-      stopAmbientAudio();
-    };
-  }, [isPlaying, activeTrack]);
-
-  useEffect(() => {
-    if (gainNodeRef.current && audioCtxRef.current) {
-      gainNodeRef.current.gain.setTargetAtTime(volume / 100 * 0.15, audioCtxRef.current.currentTime, 0.1);
-    }
-  }, [volume]);
-
-  const startAmbientAudio = () => {
+  // Declare as functions so they are hoisted
+  function startAmbientAudio() {
     try {
       if (!audioCtxRef.current) {
         const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
@@ -41,6 +25,10 @@ export function AmbientPlayer() {
       const ctx = audioCtxRef.current;
       if (ctx.state === 'suspended') {
         ctx.resume();
+      }
+
+      if (noiseNodeRef.current) {
+        stopAmbientAudio();
       }
 
       const bufferSize = ctx.sampleRate * 2;
@@ -82,16 +70,33 @@ export function AmbientPlayer() {
     } catch (e) {
       console.log('Audio Context initialization note:', e);
     }
-  };
+  }
 
-  const stopAmbientAudio = () => {
+  function stopAmbientAudio() {
     if (noiseNodeRef.current) {
       try {
         (noiseNodeRef.current as AudioBufferSourceNode).stop();
       } catch (e) { /* ignore */ }
       noiseNodeRef.current = null;
     }
-  };
+  }
+
+  useEffect(() => {
+    if (isPlaying) {
+      startAmbientAudio();
+    } else {
+      stopAmbientAudio();
+    }
+    return () => {
+      stopAmbientAudio();
+    };
+  }, [isPlaying, activeTrack]);
+
+  useEffect(() => {
+    if (gainNodeRef.current && audioCtxRef.current) {
+      gainNodeRef.current.gain.setTargetAtTime(volume / 100 * 0.15, audioCtxRef.current.currentTime, 0.1);
+    }
+  }, [volume]);
 
   return (
     <section className="my-8 w-full">
@@ -126,8 +131,6 @@ export function AmbientPlayer() {
                 <h3 className="text-sm sm:text-base text-[#1E293B] font-semibold">{activeTrack.name}</h3>
                 <p className="text-xs text-[#64748B] flex items-center gap-1.5 mt-0.5">
                   <span className={`inline-block w-2 h-2 rounded-full ${isPlaying ? 'bg-[#4A6B5D] animate-ping' : 'bg-gray-300'}`} />
-                  <span>Looping Tenang ∞</span>
-                  <span className="text-[#CBD5E1]">•</span>
                   <span>Gelombang Alpha 432 Hz</span>
                 </p>
               </div>
@@ -153,26 +156,37 @@ export function AmbientPlayer() {
           </div>
 
           <div className="bg-white rounded-xl px-4 py-3 border border-[#E2E8F0] flex flex-col gap-2">
-            <div className="flex items-center justify-between text-xs text-[#64748B] font-mono">
+            {/* <div className="flex items-center justify-between text-xs text-[#64748B] font-mono">
               <span className="flex items-center gap-1.5 text-[#4A6B5D] font-medium">
-                <Waves size={14} />
-                Suara Rileks Lembut
+                {/* <Waves size={14} />
+                Suara Rileks Lembut }
               </span>
               <span>{isPlaying ? '04:18 / ∞' : '00:00 / ∞'}</span>
-            </div>
+            </div> */}
 
-            <div className="h-10 w-full flex items-center justify-between gap-1 px-1">
-              {[18, 26, 34, 22, 38, 30, 36, 20, 28, 36, 40, 32, 24, 34, 38, 26, 16, 28, 32, 18].map((h, i) => (
-                <span
-                  key={i}
-                  className={`flex-1 rounded-full transition-all duration-300 ${isPlaying ? 'bg-[#4A6B5D]' : 'bg-[#CBD5E1]'}`}
-                  style={{
-                    height: isPlaying ? `${h}px` : '6px',
-                    opacity: isPlaying ? 0.4 + (i % 5) * 0.15 : 0.4
-                  }}
-                />
-              ))}
+            <div className="h-12 w-full flex items-center justify-between gap-[2px] px-1 mt-1">
+              {Array.from({ length: 70 }).map((_, i) => {
+                const h = 24 + Math.sin(i * 0.7) * 12 + Math.cos(i * 1.3) * 10;
+                const finalH = Math.max(8, Math.min(40, h));
+                return (
+                  <span
+                    key={i}
+                    className={`w-1 rounded-full ${isPlaying ? 'bg-[#4A6B5D]' : 'bg-[#CBD5E1] transition-all duration-300'}`}
+                    style={{
+                      height: isPlaying ? `${finalH}px` : '3px',
+                      opacity: isPlaying ? 0.4 + (i % 4) * 0.1 : 0.3,
+                      animation: isPlaying ? `equalizer ${0.3 + (i % 4) * 0.1}s ease-in-out infinite alternate ${(i % 10) * 0.05}s` : 'none',
+                    }}
+                  />
+                );
+              })}
             </div>
+            <style>{`
+              @keyframes equalizer {
+                0% { transform: scaleY(0.3); }
+                100% { transform: scaleY(1.3); }
+              }
+            `}</style>
           </div>
 
           <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
@@ -182,11 +196,10 @@ export function AmbientPlayer() {
                 <button
                   key={track.id}
                   onClick={() => setActiveTrack(track)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors cursor-pointer ${
-                    activeTrack.id === track.id
-                      ? 'bg-[#E8EFEA] text-[#4A6B5D] border border-[#4A6B5D]/30 font-semibold'
-                      : 'bg-white text-[#64748B] hover:text-[#1E293B] border border-[#E2E8F0]'
-                  }`}
+                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors cursor-pointer ${activeTrack.id === track.id
+                    ? 'bg-[#E8EFEA] text-[#4A6B5D] border border-[#4A6B5D]/30 font-semibold'
+                    : 'bg-white text-[#64748B] hover:text-[#1E293B] border border-[#E2E8F0]'
+                    }`}
                 >
                   {track.name}
                 </button>

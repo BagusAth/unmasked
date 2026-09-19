@@ -1,12 +1,17 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import sessionRoutes from './routes/sessionRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 
+// Support reading .env from the root directory since the user runs the server from root
+dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
+// Also try current dir just in case
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5555;
 
 // Enable CORS for frontend development
 app.use(cors({
@@ -34,6 +39,8 @@ app.get('/api/health', (_req, res) => {
 
 // Session routes
 app.use('/api/sessions', sessionRoutes);
+// AI routes
+app.use('/api/ai', aiRoutes);
 
 // 404 handler for undefined API routes
 app.use((_req, res) => {

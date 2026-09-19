@@ -88,20 +88,6 @@ export function AffirmationCard() {
             ))}
           </div>
         </div>
-
-        <div className="pt-3 border-t border-[#FBE9E3] flex justify-center">
-          <button
-            onClick={handleSelfHug}
-            className={`inline-flex items-center gap-2 px-5 py-2 rounded-full font-medium text-xs transition-all cursor-pointer shadow-2xs ${
-              isHugged
-                ? 'bg-[#C86D51] text-white'
-                : 'bg-[#FBE9E3] hover:bg-[#FBE9E3]/80 text-[#C86D51]'
-            }`}
-          >
-            <Smile size={16} />
-            <span>{isHugged ? 'Terima kasih sudah bertahan hari ini ♡' : 'Sentuh untuk Memeluk Diri'}</span>
-          </button>
-        </div>
       </div>
     </section>
   );

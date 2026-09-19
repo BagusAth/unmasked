@@ -38,7 +38,7 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
             <div className="flex items-center justify-between pb-2 border-b border-[#A7F3D0]/60">
               <span className="text-xs font-bold text-[#047857] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#047857]" />
-                Dalam Kendaliku
+                Bisa Dilakukan Sekarang (Dalam Kendali)
               </span>
             </div>
             <div className="flex flex-col gap-2.5 min-h-[120px]">
@@ -58,7 +58,7 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
                         onClick={() => onMoveCategory(item.id, 'influence')}
                         className="hover:text-[#B45309] transition-colors"
                       >
-                        Pengaruh →
+                        Bicarakan →
                       </button>
                       <button
                         onClick={() => onReleaseBurden(item.id)}
@@ -82,7 +82,7 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
             <div className="flex items-center justify-between pb-2 border-b border-[#FDE68A]/60">
               <span className="text-xs font-bold text-[#B45309] flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#B45309]" />
-                Bisa Kupengaruhi
+                Perlu Dibicarakan ke Orang Lain
               </span>
             </div>
             <div className="flex flex-col gap-2.5 min-h-[120px]">
@@ -102,7 +102,7 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
                         onClick={() => onMoveCategory(item.id, 'within')}
                         className="hover:text-[#047857] transition-colors"
                       >
-                        ← Kendali
+                        ← Lakukan Skrg
                       </button>
                       <button
                         onClick={() => onMoveCategory(item.id, 'outside')}
@@ -146,14 +146,14 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
                           onClick={() => onMoveCategory(item.id, 'within')}
                           className="hover:text-[#047857] transition-colors"
                         >
-                          ← Kendali
+                          ← Lakukan Skrg
                         </button>
                         <span>•</span>
                         <button
                           onClick={() => onMoveCategory(item.id, 'influence')}
                           className="hover:text-[#B45309] transition-colors"
                         >
-                          ← Pengaruh
+                          ← Bicarakan
                         </button>
                       </div>
                       <button

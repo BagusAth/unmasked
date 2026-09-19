@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { History as HistoryIcon, Lock, Lightbulb, FolderOpen, Eye, EyeOff } from 'lucide-react';
 
-interface ReflectionEntry {
+export interface ReflectionEntry {
   id: string;
   date: string;
   durationMinutes: number;
@@ -10,20 +10,8 @@ interface ReflectionEntry {
   needInsight: string;
 }
 
-const INITIAL_REFLECTIONS: ReflectionEntry[] = [
-  {
-    id: '1',
-    date: 'Kemarin, 21:15 WIB',
-    durationMinutes: 8,
-    tags: ['Kelelahan Ekstrem', 'Cemas Sidang'],
-    summary: 'Semalam merasa sangat kewalahan karena menanggung semua tugas kelompok sendirian tanpa berani bilang tidak. Ada ketakutan dihakimi jika aku tidak perfeksionis.',
-    needInsight: 'Berhenti sejenak, menetapkan batas yang jelas, dan mengakui bahwa kemampuan serta energimu memiliki batas yang wajar.'
-  }
-];
-
-export function ReflectionDiary() {
+export function ReflectionDiary({ reflections }: { reflections: ReflectionEntry[] }) {
   const [isMasked, setIsMasked] = useState(true);
-  const [reflections] = useState<ReflectionEntry[]>(INITIAL_REFLECTIONS);
 
   return (
     <section className="my-8 w-full" id="refleksi-terakhir">
@@ -52,7 +40,7 @@ export function ReflectionDiary() {
           </div>
         </div>
 
-        {reflections.map((item) => (
+        {reflections?.map((item) => (
           <div key={item.id} className="bg-white border border-[#E2E8F0] rounded-xl p-5 flex flex-col gap-4 shadow-2xs">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#64748B]">
               <div className="flex items-center gap-2">
@@ -64,7 +52,7 @@ export function ReflectionDiary() {
                 <span>Durasi hening {item.durationMinutes} menit</span>
               </div>
               <div className="flex flex-wrap gap-1.5">
-                {item.tags.map((tag, i) => (
+                {item?.tags?.map((tag, i) => (
                   <span key={i} className="px-2.5 py-0.5 rounded-full bg-[#FBE9E3] text-[#C86D51] text-[11px] font-medium">
                     {tag}
                   </span>
@@ -101,6 +89,16 @@ export function ReflectionDiary() {
             </div>
           </div>
         ))}
+
+        {(!reflections || reflections.length === 0) && (
+          <div className="bg-white border border-[#E2E8F0] rounded-xl p-8 flex flex-col items-center justify-center text-center shadow-2xs gap-3">
+            <FolderOpen size={32} className="text-[#94A3B8]" />
+            <p className="text-sm text-[#64748B]">
+              Belum ada riwayat refleksi.<br/>
+              Curahkan isi pikiranmu di Kanvas Pelepasan untuk memulai.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

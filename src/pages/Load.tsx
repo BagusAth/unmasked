@@ -9,6 +9,7 @@ import { CircleOfControl } from '../components/load/CircleOfControl';
 import { AmbientPlayer } from '../components/load/AmbientPlayer';
 import { AffirmationCard } from '../components/load/AffirmationCard';
 import { ReflectionDiary } from '../components/load/ReflectionDiary';
+import type { ReflectionEntry } from '../components/load/ReflectionDiary';
 
 export interface BurdenItem {
   id: string;
@@ -20,10 +21,14 @@ export interface BurdenItem {
 export function Load() {
   // State: Brain Dump & Burdens
   const [brainDumpText, setBrainDumpText] = useState('');
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [burdens, setBurdens] = useState<BurdenItem[]>(() => {
     const saved = localStorage.getItem('unmasked_burdens');
     if (saved) {
-      try { return JSON.parse(saved); } catch (e) { /* fallback */ }
+      try { 
+        const parsed = JSON.parse(saved); 
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* fallback */ }
     }
     return [
       { id: '1', text: 'Ekspektasi tinggi orang tua terhadap IPK', category: 'outside', createdAt: 'Hari ini' },
@@ -37,17 +42,69 @@ export function Load() {
     localStorage.setItem('unmasked_burdens', JSON.stringify(burdens));
   }, [burdens]);
 
-  // Add new burden from brain dump
-  const handleAddBurden = () => {
+  const [reflections, setReflections] = useState<ReflectionEntry[]>(() => {
+    const saved = localStorage.getItem('unmasked_reflections');
+    if (saved) {
+      try { 
+        const parsed = JSON.parse(saved); 
+        if (Array.isArray(parsed)) return parsed;
+      } catch (e) { /* fallback */ }
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('unmasked_reflections', JSON.stringify(reflections));
+  }, [reflections]);
+
+  // Add new burden from brain dump using AI
+  const handleAddBurden = async () => {
     if (!brainDumpText.trim()) return;
-    const newBurden: BurdenItem = {
-      id: Date.now().toString(),
-      text: brainDumpText.trim(),
-      category: 'outside', // Default to outside control, user can categorize
-      createdAt: 'Baru saja'
-    };
-    setBurdens([newBurden, ...burdens]);
-    setBrainDumpText('');
+    setIsAnalyzing(true);
+    
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5555';
+      const response = await fetch(`${apiUrl}/api/ai/analyze-burdens`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: brainDumpText.trim() })
+      });
+      
+      const resData = await response.json();
+      
+      if (resData.success && resData.data) {
+        const aiData = resData.data;
+        
+        // 1. Add extracted burdens
+        const newBurdens = aiData.burdens.map((b: any, index: number) => ({
+          id: Date.now().toString() + '-' + index,
+          text: b.text,
+          category: b.category,
+          createdAt: 'Baru saja'
+        }));
+        setBurdens([...newBurdens, ...burdens]);
+
+        // 2. Add reflection diary entry
+        const newReflection: ReflectionEntry = {
+          id: Date.now().toString(),
+          date: 'Hari ini, ' + new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ' WIB',
+          durationMinutes: 0,
+          tags: aiData.tags || [],
+          summary: aiData.summary || '',
+          needInsight: aiData.needInsight || ''
+        };
+        setReflections([newReflection, ...reflections]);
+        
+        setBrainDumpText('');
+      } else {
+        alert('Gagal menganalisis teks, silakan coba lagi.');
+      }
+    } catch (error) {
+      console.error('Error analyzing:', error);
+      alert('Terjadi kesalahan koneksi ke server AI.');
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   // Move burden category
@@ -98,7 +155,7 @@ export function Load() {
                 Kanvas Pelepasan Batin
               </span>
               <a
-                href="#refleksi-terakhir"
+                 href="#refleksi-terakhir"
                 className="text-xs text-[#4A6B5D] hover:underline flex items-center gap-1 transition-colors font-medium"
               >
                 <HistoryIcon size={14} />
@@ -123,11 +180,11 @@ export function Load() {
               </div>
               <button
                 onClick={handleAddBurden}
-                disabled={!brainDumpText.trim()}
+                disabled={!brainDumpText.trim() || isAnalyzing}
                 className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#4A6B5D] text-white text-xs sm:text-sm font-semibold hover:bg-[#3D584C] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm flex items-center justify-center gap-2 group cursor-pointer"
               >
-                <span>Lepaskan Beban ke Ruang Tenang</span>
-                <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
+                <span>{isAnalyzing ? 'Menganalisis...' : 'Lepaskan Beban ke Ruang Tenang'}</span>
+                {!isAnalyzing && <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />}
               </button>
             </div>
           </motion.div>
@@ -143,7 +200,7 @@ export function Load() {
 
         <AffirmationCard />
 
-        <ReflectionDiary />
+        <ReflectionDiary reflections={reflections} />
       </main>
 
       <Footer />
