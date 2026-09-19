@@ -11,12 +11,7 @@ import { AffirmationCard } from '../components/load/AffirmationCard';
 import { ReflectionDiary } from '../components/load/ReflectionDiary';
 import type { ReflectionEntry } from '../components/load/ReflectionDiary';
 
-export interface BurdenItem {
-  id: string;
-  text: string;
-  category: 'within' | 'influence' | 'outside';
-  createdAt: string;
-}
+import type { BurdenItem } from '../components/load/BurdenCard';
 
 export function Load() {
   // State: Brain Dump & Burdens

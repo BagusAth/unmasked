@@ -1,13 +1,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Compass, Sparkles, Circle, CheckCircle2, Trash2 } from 'lucide-react';
-
-interface BurdenItem {
-  id: string;
-  text: string;
-  category: 'within' | 'influence' | 'outside';
-  createdAt: string;
-}
+import { Compass } from 'lucide-react';
+import { BurdenCard } from './BurdenCard';
+import type { BurdenItem } from './BurdenCard';
 
 interface CircleOfControlProps {
   burdens: BurdenItem[];
@@ -44,31 +39,12 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
             <div className="flex flex-col gap-2.5 min-h-[120px]">
               <AnimatePresence>
                 {burdens.filter(b => b.category === 'within').map(item => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-white p-3 rounded-lg border border-[#A7F3D0] shadow-2xs text-xs text-[#1E293B] flex flex-col gap-2 justify-between"
-                  >
-                    <p className="leading-relaxed font-medium">{item.text}</p>
-                    <div className="flex items-center justify-between pt-1 border-t border-gray-100 text-[11px] text-[#64748B]">
-                      <button
-                        onClick={() => onMoveCategory(item.id, 'influence')}
-                        className="hover:text-[#B45309] transition-colors"
-                      >
-                        Bicarakan →
-                      </button>
-                      <button
-                        onClick={() => onReleaseBurden(item.id)}
-                        className="text-[#4A6B5D] hover:text-[#3D584C] font-medium transition-colors"
-                        title="Selesai"
-                      >
-                        <CheckCircle2 size={14} />
-                      </button>
-                    </div>
-                  </motion.div>
+                  <BurdenCard 
+                    key={item.id} 
+                    item={item} 
+                    onMoveCategory={onMoveCategory} 
+                    onReleaseBurden={onReleaseBurden} 
+                  />
                 ))}
               </AnimatePresence>
               {burdens.filter(b => b.category === 'within').length === 0 && (
@@ -88,30 +64,12 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
             <div className="flex flex-col gap-2.5 min-h-[120px]">
               <AnimatePresence>
                 {burdens.filter(b => b.category === 'influence').map(item => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-white p-3 rounded-lg border border-[#FDE68A] shadow-2xs text-xs text-[#1E293B] flex flex-col gap-2 justify-between"
-                  >
-                    <p className="leading-relaxed font-medium">{item.text}</p>
-                    <div className="flex items-center justify-between pt-1 border-t border-gray-100 text-[11px] text-[#64748B]">
-                      <button
-                        onClick={() => onMoveCategory(item.id, 'within')}
-                        className="hover:text-[#047857] transition-colors"
-                      >
-                        ← Lakukan Skrg
-                      </button>
-                      <button
-                        onClick={() => onMoveCategory(item.id, 'outside')}
-                        className="hover:text-[#475569] transition-colors"
-                      >
-                        Luar Kendali →
-                      </button>
-                    </div>
-                  </motion.div>
+                  <BurdenCard 
+                    key={item.id} 
+                    item={item} 
+                    onMoveCategory={onMoveCategory} 
+                    onReleaseBurden={onReleaseBurden} 
+                  />
                 ))}
               </AnimatePresence>
               {burdens.filter(b => b.category === 'influence').length === 0 && (
@@ -131,41 +89,12 @@ export function CircleOfControl({ burdens, onMoveCategory, onReleaseBurden }: Ci
             <div className="flex flex-col gap-2.5 min-h-[120px]">
               <AnimatePresence>
                 {burdens.filter(b => b.category === 'outside').map(item => (
-                  <motion.div
-                    key={item.id}
-                    layout
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="bg-white p-3 rounded-lg border border-[#CBD5E1] shadow-2xs text-xs text-[#1E293B] flex flex-col gap-2 justify-between"
-                  >
-                    <p className="leading-relaxed font-medium">{item.text}</p>
-                    <div className="flex items-center justify-between pt-1 border-t border-gray-100 text-[11px] text-[#64748B]">
-                      <div className="flex items-center gap-1">
-                        <button
-                          onClick={() => onMoveCategory(item.id, 'within')}
-                          className="hover:text-[#047857] transition-colors"
-                        >
-                          ← Lakukan Skrg
-                        </button>
-                        <span>•</span>
-                        <button
-                          onClick={() => onMoveCategory(item.id, 'influence')}
-                          className="hover:text-[#B45309] transition-colors"
-                        >
-                          ← Bicarakan
-                        </button>
-                      </div>
-                      <button
-                        onClick={() => onReleaseBurden(item.id)}
-                        className="text-[#C86D51] hover:text-[#B75D45] font-semibold transition-colors flex items-center gap-1"
-                        title="Let It Go"
-                      >
-                        <Sparkles size={12} />
-                        <span>Lepaskan</span>
-                      </button>
-                    </div>
-                  </motion.div>
+                  <BurdenCard 
+                    key={item.id} 
+                    item={item} 
+                    onMoveCategory={onMoveCategory} 
+                    onReleaseBurden={onReleaseBurden} 
+                  />
                 ))}
               </AnimatePresence>
               {burdens.filter(b => b.category === 'outside').length === 0 && (
