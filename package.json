@@ -8,6 +8,7 @@
     "server": "npm --prefix server run dev",
     "server:build": "npm --prefix server run build",
     "server:start": "npm --prefix server run start",
+    "install:all": "npm install && npm --prefix server install",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
