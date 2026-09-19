@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import sessionRoutes from './routes/sessionRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 
 dotenv.config();
 
@@ -34,6 +35,9 @@ app.get('/api/health', (_req, res) => {
 
 // Session routes
 app.use('/api/sessions', sessionRoutes);
+
+// AI Reflection routes
+app.use('/api/ai', aiRoutes);
 
 // 404 handler for undefined API routes
 app.use((_req, res) => {
