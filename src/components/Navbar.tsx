@@ -51,6 +51,12 @@ export const Navbar: React.FC = () => {
           >
             Box Breathing
           </a>
+          <a
+            href="/load"
+            className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
+          >
+            Ruang Pribadiku
+          </a>
         </nav>
 
         {/* Right: Language Selector & Mobile Hamburger */}
@@ -135,6 +141,13 @@ export const Navbar: React.FC = () => {
             className="block hover:text-[#111827]"
           >
             Box Breathing
+          </a>
+          <a
+            href="/load"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block hover:text-[#111827]"
+          >
+            Ruang Pribadiku
           </a>
         </div>
       )}

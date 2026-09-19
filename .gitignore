@@ -27,3 +27,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Other
+**/design_of_unmasked.md
+**/development_guide_of_unmasked.md
+
