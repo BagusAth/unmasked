@@ -33,7 +33,7 @@ export const CoreRealizationCard: React.FC<CoreRealizationCardProps> = ({
               <Lightbulb size={16} />
             </span>
             <span className="text-xs font-bold tracking-wider text-[#284B3E] uppercase">
-              Kebutuhan Diri
+              Yang Kusadari
             </span>
           </div>
         </div>
@@ -55,7 +55,7 @@ export const CoreRealizationCard: React.FC<CoreRealizationCardProps> = ({
           {/* Primary Need */}
           <div className="flex flex-col gap-1">
             <span className="text-[11px] font-semibold text-[#64748B] uppercase tracking-wider">
-              Yang Mungkin Sedang Kubutuhkan
+              Yang Mungkin Kubutuhkan
             </span>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE9E3] text-[#97472E] text-xs sm:text-sm font-semibold shadow-2xs">
               <Flower2 size={15} className="text-[#C86D51]" />
@@ -66,7 +66,7 @@ export const CoreRealizationCard: React.FC<CoreRealizationCardProps> = ({
           {/* Body State */}
           <div className="flex flex-col gap-1">
             <span className="text-[11px] font-semibold text-[#64748B] uppercase tracking-wider">
-              Kondisi Tubuh
+              Yang Kurasa di Tubuh
             </span>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F1F5F9] text-[#334155] text-xs sm:text-sm font-medium">
               <Wind size={15} className="text-[#284B3E]" />
@@ -78,10 +78,10 @@ export const CoreRealizationCard: React.FC<CoreRealizationCardProps> = ({
 
       {/* Footer Info */}
       <div className="mt-6 pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-xs text-[#64748B]">
-        <span>Catatan refleksi mandiri</span>
+        <span>Dari refleksimu sendiri.</span>
         <span className="flex items-center gap-1.5">
           <Lock size={13} className="text-[#284B3E]" />
-          <span>Tersimpan lokal di perangkat ini</span>
+          <span>Disimpan di perangkat ini</span>
         </span>
       </div>
     </motion.div>

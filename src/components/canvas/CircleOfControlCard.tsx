@@ -46,11 +46,11 @@ export const CircleOfControlCard: React.FC<CircleOfControlCardProps> = ({
               <PieChart size={16} />
             </span>
             <span className="text-xs font-bold tracking-wider text-[#284B3E] uppercase">
-              Beban yang Berhasil Kupilah
+              Yang Kutata
             </span>
           </div>
           <span className="text-xs font-semibold text-[#284B3E] bg-[#E8EFEA] px-3 py-1 rounded-full">
-            {totalItems} Hal Berhasil Dipilah
+            {totalItems} hal
           </span>
         </div>
 
@@ -59,9 +59,8 @@ export const CircleOfControlCard: React.FC<CircleOfControlCardProps> = ({
           <div className="flex items-center justify-between text-xs">
             <span className="flex items-center gap-1.5 text-[#284B3E] font-bold">
               <span className="w-2 h-2 rounded-full bg-[#284B3E]" />
-              Bisa Aku Kendalikan
+              Ada dalam kendaliku
             </span>
-            <span className="text-[#64748B] font-medium">Bisa Kulakukan Sendiri</span>
           </div>
 
           <div className="space-y-2">
@@ -88,9 +87,8 @@ export const CircleOfControlCard: React.FC<CircleOfControlCardProps> = ({
             <div className="flex items-center justify-between text-xs">
               <span className="flex items-center gap-1.5 text-[#2C5282] font-bold">
                 <span className="w-2 h-2 rounded-full bg-[#2C5282]" />
-                Perlu Dikomunikasikan
+                Perlu dibicarakan
               </span>
-              <span className="text-[#64748B] font-medium">Perlu Batasan & Bicara</span>
             </div>
 
             <div className="space-y-2">
@@ -117,9 +115,8 @@ export const CircleOfControlCard: React.FC<CircleOfControlCardProps> = ({
           <div className="flex items-center justify-between text-xs">
             <span className="flex items-center gap-1.5 text-[#C86D51] font-bold">
               <span className="w-2 h-2 rounded-full bg-[#C86D51]" />
-              Di Luar Kendaliku
+              Aku lepaskan untuk sekarang
             </span>
-            <span className="text-[#64748B] font-medium">Untuk Sementara, Aku Lepaskan</span>
           </div>
 
           <div className="space-y-2">

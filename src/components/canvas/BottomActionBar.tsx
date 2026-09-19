@@ -59,11 +59,11 @@ export const BottomActionBar: React.FC<BottomActionBarProps> = ({
         {/* Clear Memory */}
         <button
           onClick={onClearSession}
-          title="Bersihkan cache RAM jika menggunakan komputer publik kampus"
+          title="Tutup sesi aktif dan bersihkan data sementara dari perangkat ini"
           className="h-10 px-4 rounded-full bg-[#FBE9E3]/70 hover:bg-[#FBE9E3] text-[#A9503B] border border-[#F8D5CB] text-xs sm:text-sm font-semibold transition-all inline-flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
         >
           <Trash2 size={15} />
-          <span>Akhiri Sesi & Bersihkan Layar</span>
+          <span>Tutup Refleksi</span>
         </button>
       </div>
     </motion.div>

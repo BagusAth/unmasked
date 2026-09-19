@@ -15,7 +15,8 @@ export const MaskComparisonCard: React.FC<MaskComparisonCardProps> = ({
   publicTags = ['Kelihatan selalu tenang', 'Selalu ada untuk teman'],
   innerFeelingText = '“Kelelahan batin yang sunyi dan cemas kalau berhenti sejenak.”',
   innerTags = ['Kewalahan & butuh jeda', 'Takut dianggap tidak mampu'],
-  validationMessage = 'Terima kasih sudah mau jujur pada diri sendiri hari ini. Mengakui bahwa kamu lelah adalah langkah awal yang berani, bukan tanda kelemahan.',
+  validationMessage =
+    'Terima kasih sudah mau jujur pada diri sendiri hari ini. Kamu tidak harus selalu terlihat baik-baik saja untuk mengakui bahwa sesuatu terasa berat.',
 }) => {
   return (
     <motion.div
@@ -33,7 +34,7 @@ export const MaskComparisonCard: React.FC<MaskComparisonCardProps> = ({
               <Sparkles size={16} />
             </span>
             <span className="text-xs font-bold tracking-wider text-[#C86D51] uppercase">
-              Yang Dirasakan
+              Yang Kubuka
             </span>
           </div>
         </div>
@@ -89,7 +90,7 @@ export const MaskComparisonCard: React.FC<MaskComparisonCardProps> = ({
         <Heart size={18} className="text-[#284B3E] shrink-0 mt-0.5" />
         <div className="flex flex-col gap-0.5">
           <span className="text-xs font-bold text-[#284B3E]">
-            Apresiasi Diri yang Lembut
+            Sedikit Pengingat untukmu
           </span>
           <p className="text-xs sm:text-sm text-[#334155] leading-relaxed">
             {validationMessage}

@@ -38,13 +38,13 @@ export const CanvasHeader: React.FC<CanvasHeaderProps> = ({
             </h1>
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8EFEA] text-[#284B3E] text-xs font-semibold shadow-2xs">
               <Clock size={13} className="text-[#284B3E]" />
-              <span>Jeda hening {durationMinutes} menit</span>
+              <span>Refleksi • {durationMinutes} menit</span>
             </span>
           </div>
 
           {/* Compassionate Subtitle */}
           <p className="text-sm sm:text-base text-[#525F7F] font-normal leading-relaxed max-w-2xl">
-            Catatan jujur tentang apa yang sedang kamu hadapi dan langkah kecil yang bisa kamu ambil hari ini.
+            Apa yang kamu sadari hari ini, apa yang bisa kamu lepaskan, dan satu langkah kecil yang ingin kamu pilih.
           </p>
         </motion.div>
 
@@ -61,7 +61,7 @@ export const CanvasHeader: React.FC<CanvasHeaderProps> = ({
           </span>
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F4F5F0] text-[#525F7F] border border-[#E8E8E2] text-xs font-medium">
             <Lock size={14} className="text-[#284B3E]" />
-            <span>Tersimpan aman di perambanmu</span>
+            <span>Tersimpan di perangkat ini</span>
           </span>
         </motion.div>
       </div>

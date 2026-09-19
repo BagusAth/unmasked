@@ -113,7 +113,7 @@ export const useCanvasData = () => {
           innerFeelingText: '“Panik setiap membuka laptop dan takut skripsi tidak selesai tepat waktu.”',
           innerTags: ['Kelelahan kognitif', 'Takut mengecewakan orang tua'],
           validationMessage:
-            'Mengakui bahwa skripsi ini berat bukan berarti kamu tidak mampu. Kamu sudah melangkah sangat jauh hingga titik ini.',
+            'Terima kasih sudah mau jujur pada diri sendiri hari ini. Kamu tidak harus selalu terlihat baik-baik saja untuk mengakui bahwa sesuatu terasa berat.',
         },
         load: {
           withinControlItems: [
@@ -141,7 +141,7 @@ export const useCanvasData = () => {
           actionTitle: 'Sampaikan Batasan Diri ke Kelompok',
           actionScript:
             '“Halo rekan-rekan, kondisi fisik dan pikiranku minggu ini sedang sangat lelah dan butuh istirahat sebentar. Pembahasan tugas kita lanjutkan besok pagi ya. Terima kasih banyak atas pengertiannya 🙏”',
-          helperNote: 'Kirim saat kamu sudah merasa tenang',
+          helperNote: 'Kamu bisa melakukannya saat siap.',
           isCompleted: false,
         },
         createdAt: new Date().toISOString(),
@@ -183,7 +183,7 @@ export const useCanvasData = () => {
           actionTitle: 'Minta Rekan Divisi Mengambil Alih',
           actionScript:
             '“Halo tim, untuk koordinasi logistik sore ini silakan langsung ke wakil divisi ya. Aku izin rehat sejenak agar besok bisa kembali optimal.”',
-          helperNote: 'Delegasikan dengan percaya pada rekanmu',
+          helperNote: 'Kamu bisa melakukannya saat siap.',
           isCompleted: false,
         },
         createdAt: new Date().toISOString(),

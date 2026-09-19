@@ -134,17 +134,23 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
 
   // Copy boundary script to clipboard
   const handleCopyScript = () => {
-    if (navigator.clipboard) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(scriptToCopy)
         .then(() => {
           onShowToast('Draf pesan berhasil disalin ke clipboard.', 'copy');
         })
         .catch(() => {
-          onShowToast('Draf pesan berhasil disalin.', 'copy');
+          onShowToast(
+            'Browser tidak mengizinkan penyalinan otomatis. Silakan salin teks secara manual.',
+            'security'
+          );
         });
     } else {
-      onShowToast('Draf pesan berhasil disalin.', 'copy');
+      onShowToast(
+        'Browser tidak mengizinkan penyalinan otomatis. Silakan salin teks secara manual.',
+        'security'
+      );
     }
   };
 
@@ -199,10 +205,10 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
               KARTU PENGINGAT HARIAN
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111827]">
-              Bawa pengingat ini menemanimu menjalani hari-hari kuliah.
+              Simpan satu hal yang ingin kamu ingat dari hari ini.
             </h2>
             <p className="text-sm sm:text-base text-[#525F7F] leading-relaxed mt-1">
-              Pengingat sederhana untuk sistem sarafmu: kamu punya hak penuh untuk beristirahat dan tidak harus selalu membuktikan apa pun kepada siapa pun.
+              Kadang kita tidak butuh jawaban baru. Cukup satu hal yang ingin kita ingat setelah berhenti sejenak.
             </p>
           </div>
 

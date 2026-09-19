@@ -11,7 +11,7 @@ import { MindfulKeepsakeCard } from '../components/canvas/MindfulKeepsakeCard';
 import { BottomActionBar } from '../components/canvas/BottomActionBar';
 import { ToastNotification } from '../components/canvas/ToastNotification';
 import { useCanvasData } from '../hooks/useCanvasData';
-import { Compass, ArrowRight } from 'lucide-react';
+import { Compass, ArrowRight, Sparkles } from 'lucide-react';
 
 export const Canvas: React.FC = () => {
   const {
@@ -19,6 +19,7 @@ export const Canvas: React.FC = () => {
     updateCommitment,
     saveToVault,
     clearSession,
+    seedSampleData,
   } = useCanvasData();
 
   const [toast, setToast] = useState<{
@@ -54,9 +55,9 @@ export const Canvas: React.FC = () => {
   const handleSaveVault = () => {
     const success = saveToVault();
     if (success) {
-      showToast('Sesi berhasil disimpan ke Ruang Pribadimu di perangkat ini.', 'save');
+      showToast('Refleksi ini sudah disimpan di Ruang Pribadimu.', 'save');
     } else {
-      showToast('Gagal menyimpan sesi ke ruang pribadi.', 'security');
+      showToast('Gagal menyimpan refleksi ke ruang pribadi.', 'security');
     }
   };
 
@@ -64,7 +65,7 @@ export const Canvas: React.FC = () => {
   const handleClearData = () => {
     clearSession();
     showToast(
-      'Data sesi berhasil dihapus dari memori sementara. Aman untuk komputer publik.',
+      'Sesi ini sudah ditutup dan data sementaranya dihapus dari perangkat ini.',
       'security'
     );
   };
@@ -75,7 +76,7 @@ export const Canvas: React.FC = () => {
     if (isDone) {
       showToast('Langkah ini sudah kamu tandai sebagai selesai.', 'check');
     } else {
-      showToast('Status langkah dikembalikan ke tertunda.', 'check');
+      showToast('Status langkah ditandai belum dilakukan.', 'check');
     }
   };
 
@@ -91,24 +92,52 @@ export const Canvas: React.FC = () => {
           </div>
 
           <span className="text-xs font-semibold tracking-widest text-[#284B3E] uppercase bg-[#E8EFEA]/80 px-3.5 py-1 rounded-full border border-[#D0DDD5]">
-            Ruang Refleksi • Kanvas Pribadi
+            Ruang Refleksi
           </span>
 
           <h1 className="text-3xl sm:text-4xl font-semibold text-[#172033] mt-4 mb-3 font-serif tracking-tight">
-            Belum ada refleksi untuk ditampilkan
+            Belum ada yang kamu bawa ke sini
           </h1>
 
           <p className="text-[#64748B] max-w-lg text-sm sm:text-base leading-relaxed mb-8">
-            Selesaikan perjalanan refleksimu terlebih dahulu. Kanvas ini akan merangkum apa yang kamu buka, tata, butuhkan, dan pilih untuk dilakukan.
+            Setelah kamu selesai berefleksi, kanvas ini akan merangkum apa yang kamu buka, tata, rasakan, dan pilih untuk dilakukan.
           </p>
 
           <Link
             to="/mask"
             className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#284B3E] text-white font-medium hover:bg-[#1f3a30] transition shadow-sm hover:shadow-md cursor-pointer text-sm group"
           >
-            <span>Mulai Perjalanan Refleksi</span>
+            <span>Mulai Refleksi</span>
             <ArrowRight size={16} className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
+
+          {/* Pratinjau Contoh Sesi Refleksi */}
+          <div className="mt-14 pt-8 border-t border-[#E5E7EB] w-full max-w-md">
+            <p className="text-xs text-[#64748B] mb-3 flex items-center justify-center gap-1.5 font-medium">
+              <Sparkles size={14} className="text-[#284B3E]" />
+              <span>Ingin melihat gambaran kanvas? Coba lihat contoh:</span>
+            </p>
+            <div className="flex items-center justify-center gap-2.5 flex-wrap">
+              <button
+                onClick={() => {
+                  seedSampleData('skripsi');
+                  showToast('Memuat contoh refleksi skripsi...', 'check');
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-white text-[#284B3E] text-xs font-medium border border-[#D0DDD5] hover:bg-[#E8EFEA] transition shadow-2xs cursor-pointer"
+              >
+                Contoh: Refleksi Skripsi
+              </button>
+              <button
+                onClick={() => {
+                  seedSampleData('organisasi');
+                  showToast('Memuat contoh refleksi kepanitiaan...', 'check');
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-white text-[#284B3E] text-xs font-medium border border-[#D0DDD5] hover:bg-[#E8EFEA] transition shadow-2xs cursor-pointer"
+              >
+                Contoh: Refleksi Kepanitiaan
+              </button>
+            </div>
+          </div>
         </main>
 
         <Footer />
@@ -124,6 +153,9 @@ export const Canvas: React.FC = () => {
   // Format keepsake quote cleanly
   const keepsakeQuote = `“${session.need.quoteBefore.replace(/^[“"']/, '')}${session.need.quoteHighlight}${session.need.quoteAfter.replace(/[”"']$/, '')}”`;
 
+  const isExampleSession =
+    session.sessionId.startsWith('session-skripsi-') || session.sessionId.startsWith('session-org-');
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] text-[#111827] flex flex-col font-sans selection:bg-[#284B3E]/15 selection:text-[#172033]">
       {/* 1. TOP NAVBAR */}
@@ -136,6 +168,35 @@ export const Canvas: React.FC = () => {
           dateString={session.dateString}
           durationMinutes={session.durationMinutes}
         />
+
+        {/* Banner Penanda Mode Contoh (hanya muncul saat pengguna melihat simulasi contoh) */}
+        {isExampleSession && (
+          <div className="my-3 p-3 rounded-2xl bg-[#F0F4F1] border border-[#DCE6E0] flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div className="flex items-center gap-2 text-[#284B3E]">
+              <Sparkles size={15} className="shrink-0" />
+              <span className="font-semibold">
+                Kamu sedang melihat contoh hasil kanvas refleksi.
+              </span>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <Link
+                to="/mask"
+                className="px-3 py-1 rounded-full bg-[#284B3E] text-white font-medium hover:bg-[#1E3A30] transition shadow-2xs cursor-pointer"
+              >
+                Mulai Refleksimu
+              </Link>
+              <button
+                onClick={() => {
+                  clearSession();
+                  showToast('Contoh refleksi ditutup.', 'check');
+                }}
+                className="px-3 py-1 rounded-full bg-white text-[#64748B] font-medium border border-neutral-200 hover:bg-neutral-50 transition shadow-2xs cursor-pointer"
+              >
+                Tutup Contoh
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* BENTO GRID (12 Columns - DYNAMIC DATA INGESTION) */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mt-6">

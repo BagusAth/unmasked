@@ -15,7 +15,7 @@ export const MicroCommitmentCard: React.FC<MicroCommitmentCardProps> = ({
   categoryBadge = 'Jangkar Hari Ini • Komunikasi Batasan',
   actionTitle = 'Sampaikan Batasanmu dengan Tenang',
   actionScript = '“Halo rekan-rekan tim, izin malam ini aku istirahat duluan ya untuk memulihkan kondisi. Pembahasan tugas kita lanjutkan besok pagi. Terima kasih banyak atas pengertiannya.”',
-  helperNote = 'Kirim kapan pun kamu merasa siap dan tenang',
+  helperNote = 'Kamu bisa melakukannya saat siap.',
   isCompleted = false,
   onStatusChange,
 }) => {
@@ -41,7 +41,7 @@ export const MicroCommitmentCard: React.FC<MicroCommitmentCardProps> = ({
               <CheckSquare size={16} />
             </span>
             <span className="text-xs font-bold tracking-wider text-[#284B3E] uppercase">
-              Aksi Nyata Sederhana
+              Satu Langkah Kecil
             </span>
           </div>
           <span
@@ -51,7 +51,7 @@ export const MicroCommitmentCard: React.FC<MicroCommitmentCardProps> = ({
                 : 'bg-[#FBE9E3] text-[#C86D51]'
             }`}
           >
-            {isCompleted ? 'Tuntas Dilakukan' : 'Aksi Tertunda'}
+            {isCompleted ? 'Sudah dilakukan' : 'Belum dilakukan'}
           </span>
         </div>
 
