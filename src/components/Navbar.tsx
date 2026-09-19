@@ -8,7 +8,11 @@ import { ID, GB } from 'country-flag-icons/react/3x2';
 const FlagID = () => <ID className="w-4 h-3 border border-gray-200" />;
 const FlagEN = () => <GB className="w-4 h-3 border border-gray-200" />;
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  activePage?: 'home' | 'journey' | 'canvas' | 'my-space' | 'support';
+}
+
+export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
@@ -31,25 +35,57 @@ export const Navbar: React.FC = () => {
         </a>
 
         {/* Center: Navigation Pill Links (Desktop) */}
-        <nav className="hidden md:flex items-center gap-1.5 rounded-full border border-[#E9E8E3] bg-[#FAF9F5]/70 p-1 text-xs font-medium text-[#5B6376] shadow-2xs">
-          {/* Active 'Beranda' Pill */}
+        <nav className="hidden md:flex items-center gap-1 rounded-full border border-[#E9E8E3] bg-[#FAF9F5]/70 p-1 text-xs font-medium text-[#5B6376] shadow-2xs">
           <a
             href="/"
-            className="rounded-full bg-[#E8EEFB] px-4 py-1.5 font-semibold text-[#2563EB] transition-colors"
+            className={`rounded-full px-3.5 py-1.5 transition-colors ${
+              activePage === 'home'
+                ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
           >
             {t('nav.home')}
           </a>
           <a
-            href="#alur"
-            className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
+            href="/#alur"
+            className={`rounded-full px-3.5 py-1.5 transition-colors ${
+              activePage === 'journey'
+                ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
           >
             {t('nav.reflection_flow')}
           </a>
           <a
-            href="#breathing"
-            className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
+            href="/canvas"
+            className={`rounded-full px-3.5 py-1.5 transition-colors ${
+              activePage === 'canvas'
+                ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
           >
-            Box Breathing
+            {t('nav.reflection_canvas')}
+          </a>
+          <a
+            href="/load"
+            className={`rounded-full px-3.5 py-1.5 transition-colors ${
+              activePage === 'my-space'
+                ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
+          >
+            {t('nav.private_space')}
+          </a>
+          <a
+            href="/support"
+            className={`rounded-full px-3.5 py-1.5 transition-colors flex items-center gap-1.5 ${
+              activePage === 'support'
+                ? 'bg-[#FBE9E3] font-bold text-[#C86D51]'
+                : 'hover:text-[#111827] hover:bg-white/60 text-[#C86D51]'
+            }`}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#C86D51] inline-block animate-pulse" />
+            <span>{t('nav.crisis_help')}</span>
           </a>
         </nav>
 
@@ -118,23 +154,37 @@ export const Navbar: React.FC = () => {
           <a
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block text-[#2563EB] font-semibold"
+            className={`block ${activePage === 'home' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.home')}
           </a>
           <a
-            href="#alur"
+            href="/#alur"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block hover:text-[#111827]"
+            className={`block ${activePage === 'journey' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.reflection_flow')}
           </a>
           <a
-            href="#breathing"
+            href="/canvas"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block hover:text-[#111827]"
+            className={`block ${activePage === 'canvas' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
-            Box Breathing
+            {t('nav.reflection_canvas')}
+          </a>
+          <a
+            href="/load"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`block ${activePage === 'my-space' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
+          >
+            {t('nav.private_space')}
+          </a>
+          <a
+            href="/support"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className={`block ${activePage === 'support' ? 'text-[#C86D51] font-bold' : 'text-[#C86D51] hover:text-[#B75D45]'}`}
+          >
+            {t('nav.crisis_help')}
           </a>
         </div>
       )}

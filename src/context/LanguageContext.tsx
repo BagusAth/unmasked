@@ -24,27 +24,27 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   };
 
   const t = (key: string): string => {
-    const translations: Record<Language, any> = {
-      ID: idTranslations,
-      EN: enTranslations,
+    const translations: Record<Language, Record<string, unknown>> = {
+      ID: idTranslations as Record<string, unknown>,
+      EN: enTranslations as Record<string, unknown>,
     };
 
     const keys = key.split('.');
-    let value = translations[language];
+    let value: unknown = translations[language];
 
     for (const k of keys) {
-      if (value === undefined) break;
-      value = value[k];
+      if (value === undefined || value === null || typeof value !== 'object') break;
+      value = (value as Record<string, unknown>)[k];
     }
 
     if (typeof value === 'string') return value;
     
     // Fallback to ID if English is missing
     if (language === 'EN') {
-      let fallbackValue = idTranslations as any;
+      let fallbackValue: unknown = idTranslations;
       for (const k of keys) {
-        if (fallbackValue === undefined) break;
-        fallbackValue = fallbackValue[k];
+        if (fallbackValue === undefined || fallbackValue === null || typeof fallbackValue !== 'object') break;
+        fallbackValue = (fallbackValue as Record<string, unknown>)[k];
       }
       if (typeof fallbackValue === 'string') return fallbackValue;
     }
@@ -59,6 +59,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
   if (context === undefined) {
