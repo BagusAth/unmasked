@@ -103,7 +103,7 @@ export const Canvas: React.FC = () => {
 
           {/* Subtitle */}
           <p className="text-[#525F7F] max-w-lg text-sm sm:text-base leading-relaxed mt-4 mb-8">
-            Setelah kamu selesai berefleksi, kanvas ini akan merangkum apa yang kamu buka, tata, rasakan, dan pilih untuk dilakukan.
+            Setelah kamu selesai berefleksi, kanvas ini akan merangkum apa yang kamu buka, bawa, sadari, dan pilih untuk lakukan.
           </p>
 
           {/* Primary CTA */}
@@ -139,7 +139,7 @@ export const Canvas: React.FC = () => {
                 <span className="w-6 h-6 rounded-full bg-[#E8EFEA] text-[#284B3E] text-xs font-bold flex items-center justify-center">
                   2
                 </span>
-                <span className="text-xs font-bold text-[#111827]">Tata Beban</span>
+                <span className="text-xs font-bold text-[#111827]">Urai Beban</span>
                 <span className="text-[11px] text-[#64748B] leading-relaxed">
                   Pilah mana yang bisa dikendalikan, dikomunikasikan, atau dilepas.
                 </span>

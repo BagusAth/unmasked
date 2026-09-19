@@ -54,7 +54,7 @@ export const CircleOfControlCard: React.FC<CircleOfControlCardProps> = ({
             </span>
             <div className="flex flex-col">
               <span className="text-xs font-bold tracking-wider text-[#284B3E] uppercase">
-                Yang Kutata
+                Beban yang Kubawa
               </span>
               <span className="text-[11px] text-[#64748B]">Lingkaran Kendali & Pelepasan</span>
             </div>
