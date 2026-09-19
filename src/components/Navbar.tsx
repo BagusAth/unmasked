@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, ShieldCheck, User } from 'lucide-react';
 import logoImg from '../assets/unmasked-logo-notext.png';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -9,13 +9,25 @@ const FlagID = () => <ID className="w-4 h-3 border border-gray-200" />;
 const FlagEN = () => <GB className="w-4 h-3 border border-gray-200" />;
 
 interface NavbarProps {
-  activePage?: 'home' | 'journey' | 'canvas' | 'my-space' | 'support';
+  onStartClick?: () => void;
+  isLoading?: boolean;
+  activePage?: 'home' | 'journey' | 'canvas' | 'my-space' | 'myspace' | 'support';
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onStartClick, 
+  isLoading = false,
+  activePage = 'home',
+}) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, setLanguage, t } = useLanguage();
+
+  const isHomeActive = activePage === 'home';
+  const isJourneyActive = activePage === 'journey';
+  const isCanvasActive = activePage === 'canvas';
+  const isMySpaceActive = activePage === 'my-space' || activePage === 'myspace';
+  const isSupportActive = activePage === 'support';
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-[#F0EFEB] transition-all">
@@ -39,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           <a
             href="/"
             className={`rounded-full px-3.5 py-1.5 transition-colors ${
-              activePage === 'home'
+              isHomeActive
                 ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
                 : 'hover:text-[#111827] hover:bg-white/60'
             }`}
@@ -49,7 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           <a
             href="/#alur"
             className={`rounded-full px-3.5 py-1.5 transition-colors ${
-              activePage === 'journey'
+              isJourneyActive
                 ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
                 : 'hover:text-[#111827] hover:bg-white/60'
             }`}
@@ -59,7 +71,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           <a
             href="/canvas"
             className={`rounded-full px-3.5 py-1.5 transition-colors ${
-              activePage === 'canvas'
+              isCanvasActive
                 ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
                 : 'hover:text-[#111827] hover:bg-white/60'
             }`}
@@ -67,9 +79,9 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
             {t('nav.reflection_canvas')}
           </a>
           <a
-            href="/load"
+            href="/#privasi"
             className={`rounded-full px-3.5 py-1.5 transition-colors ${
-              activePage === 'my-space'
+              isMySpaceActive
                 ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
                 : 'hover:text-[#111827] hover:bg-white/60'
             }`}
@@ -79,7 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           <a
             href="/support"
             className={`rounded-full px-3.5 py-1.5 transition-colors flex items-center gap-1.5 ${
-              activePage === 'support'
+              isSupportActive
                 ? 'bg-[#FBE9E3] font-bold text-[#C86D51]'
                 : 'hover:text-[#111827] hover:bg-white/60 text-[#C86D51]'
             }`}
@@ -89,8 +101,34 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           </a>
         </nav>
 
-        {/* Right: Language Selector & Mobile Hamburger */}
-        <div className="flex items-center gap-3">
+        {/* Right: Anonymity Pill, CTA, User icon & Language Selector */}
+        <div className="flex items-center gap-2.5">
+          {/* Anonymity Pill */}
+          <div className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-[#DFE3EA] bg-white px-3 py-1.5 text-xs text-[#525F7F] shadow-2xs">
+            <ShieldCheck size={14} className="text-[#10B981]" />
+            <span className="font-medium">100% Anonim + Berjalan Lokal</span>
+          </div>
+
+          {/* Quick Start Reflection Pill */}
+          {onStartClick && (
+            <button
+              onClick={onStartClick}
+              disabled={isLoading}
+              className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#284B3E] hover:bg-[#1E3A30] text-white px-4 py-1.5 text-xs font-semibold shadow-xs transition active:scale-[0.98] cursor-pointer"
+            >
+              <span>Mulai Refleksi</span>
+            </button>
+          )}
+
+          {/* User Icon Circle */}
+          <button
+            type="button"
+            title="Profil Pengguna"
+            className="hidden sm:flex h-8 w-8 rounded-full border border-[#E2E8F0] bg-white hover:bg-neutral-50 items-center justify-center text-[#475569] transition cursor-pointer"
+          >
+            <User size={15} />
+          </button>
+
           {/* Language Switcher */}
           <div className="relative">
             <button
@@ -112,7 +150,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
                     setIsLangOpen(false);
                   }}
                   className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 cursor-pointer ${
-                    language === 'ID' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
+                    language === 'ID' ? 'font-bold text-[#284B3E]' : 'text-neutral-700'
                   }`}
                 >
                   <div className="flex items-center justify-center w-5">
@@ -126,7 +164,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
                     setIsLangOpen(false);
                   }}
                   className={`w-full flex items-center gap-2 px-3 py-1.5 text-left hover:bg-neutral-100 cursor-pointer ${
-                    language === 'EN' ? 'font-bold text-[#2563EB]' : 'text-neutral-700'
+                    language === 'EN' ? 'font-bold text-[#284B3E]' : 'text-neutral-700'
                   }`}
                 >
                   <div className="flex items-center justify-center w-5">
@@ -141,7 +179,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden rounded-lg p-1.5 text-[#374151] hover:bg-neutral-100"
+            className="md:hidden rounded-lg p-1.5 text-[#374151] hover:bg-neutral-100 cursor-pointer"
           >
             {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -154,37 +192,38 @@ export const Navbar: React.FC<NavbarProps> = ({ activePage = 'home' }) => {
           <a
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`block ${activePage === 'home' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
+            className={`block ${isHomeActive ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.home')}
           </a>
           <a
             href="/#alur"
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`block ${activePage === 'journey' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
+            className={`block ${isJourneyActive ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.reflection_flow')}
           </a>
           <a
             href="/canvas"
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`block ${activePage === 'canvas' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
+            className={`block ${isCanvasActive ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.reflection_canvas')}
           </a>
           <a
-            href="/load"
+            href="/#privasi"
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`block ${activePage === 'my-space' ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
+            className={`block ${isMySpaceActive ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >
             {t('nav.private_space')}
           </a>
           <a
             href="/support"
             onClick={() => setIsMobileMenuOpen(false)}
-            className={`block ${activePage === 'support' ? 'text-[#C86D51] font-bold' : 'text-[#C86D51] hover:text-[#B75D45]'}`}
+            className={`flex items-center gap-2 ${isSupportActive ? 'text-[#C86D51] font-bold' : 'text-[#C86D51] font-semibold'}`}
           >
-            {t('nav.crisis_help')}
+            <span className="h-2 w-2 rounded-full bg-[#C86D51] animate-pulse" />
+            <span>{t('nav.crisis_help')}</span>
           </a>
         </div>
       )}

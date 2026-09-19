@@ -8,6 +8,7 @@ import Need from "./pages/Need";
 import Action from "./pages/Action";
 import Summary from "./pages/Summary";
 import Canvas from "./pages/Canvas";
+import Support from "./pages/Support";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/action" element={<Action />} />
           <Route path="/summary" element={<Summary />} />
           <Route path="/canvas" element={<Canvas />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
