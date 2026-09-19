@@ -6,34 +6,25 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      {/* CRISIS HOTLINE STRIP (PRE-FOOTER) */}
-      <section id="krisis" className="w-full px-4 sm:px-6 mt-16 mb-8 scroll-mt-28">
-        <div className="mx-auto max-w-5xl rounded-2xl bg-[#FFF0EB] border border-[#FDDCD0] px-5 py-3.5 text-center text-xs text-[#9A3412] flex flex-wrap items-center justify-center gap-2 shadow-2xs">
-          <span className="font-medium">
-            Sedang menghadapi situasi darurat?
-          </span>
-          <span className="font-bold">Hotline Kemenkes: 119</span>
-          <a
-            href="/support"
-            className="ml-1 underline font-semibold hover:text-[#7C2D12] transition"
-          >
-            Lihat daftar bantuan lengkap & Safe Harbor →
-          </a>
-        </div>
-      </section>
-
       {/* FOOTER */}
       <footer className="w-full border-t border-[#ECEBE6] bg-[#FAF9F5] py-8 text-xs text-[#6B7280]">
-        <div className="mx-auto flex max-w-5xl flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-6 text-center sm:text-left">
-          {/* Medical disclaimer note */}
-          <p className="max-w-xl leading-relaxed">
-            UNMASKED merupakan ruang untuk memahami diri, bukan pengganti penanganan medis profesional.
-          </p>
+        <div className="mx-auto flex max-w-5xl flex-col sm:flex-row items-center justify-between gap-6 px-4 sm:px-6 text-center sm:text-left">
+          
+          <div className="flex flex-col gap-2 max-w-xl mx-auto sm:mx-0">
+            {/* CRISIS HOTLINE */}
+            <p id="krisis" className="font-medium text-[#9A3412]">
+              Sedang menghadapi situasi darurat? <span className="font-bold">Hotline Kemenkes: 119</span>
+            </p>
+            {/* Medical disclaimer note */}
+            <p className="leading-relaxed">
+              UNMASKED merupakan ruang untuk memahami diri, bukan pengganti penanganan medis profesional.
+            </p>
+          </div>
 
           {/* Copyright */}
-          <p className="shrink-0 font-medium">
+          <div className="shrink-0 font-medium">
             © 2026 UNMASKED.
-          </p>
+          </div>
         </div>
       </footer>
 
