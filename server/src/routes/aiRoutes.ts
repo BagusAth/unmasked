@@ -12,7 +12,12 @@ router.post('/analyze-burdens', async (req, res) => {
 
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ success: false, message: 'Gemini API Key is not configured on the server.' });
+      console.warn('GEMINI_API_KEY not configured. Using intelligent heuristic reflection fallback.');
+      const fallbackData = generateFallbackReflection(text);
+      return res.status(200).json({
+        success: true,
+        data: fallbackData,
+      });
     }
 
     const ai = new GoogleGenAI({ apiKey });
@@ -27,22 +32,24 @@ ${text.trim()}
 """
 
 Tugas Anda:
-1. Ekstrak cerita tersebut menjadi 3 sampai 6 masalah konkret/spesifik yang ringkas.
+1. Ekstrak cerita tersebut menjadi 3 sampai 6 masalah konkret/spesifik yang ringkas (Actionable / Concrete).
 2. Kelompokkan setiap masalah ke salah satu dari 3 kategori Circle of Control:
-   - "within": Hal yang bisa dilakukan sendiri sekarang/hari ini.
+   - "within": Hal yang bisa dilakukan sendiri sekarang/hari ini atau sepenuhnya dalam kendali pribadi.
    - "influence": Hal yang memerlukan komunikasi, negosiasi, atau batasan dengan orang lain.
    - "outside": Hal di luar kendali diri (ekspektasi orang lain, masa lalu, sistem) yang perlu diikhlaskan/dilepaskan untuk saat ini.
-3. Buat kutipan reflektif batin ("quote") yang menangkap suara hati terdalam pengguna dengan format terbagi:
+3. Buatlah ringkasan (summary) empati 1-2 kalimat dari inti cerita.
+4. Berikan saran empati (needInsight) 1-2 kalimat tentang kebutuhan penenang batin saat ini.
+5. Buat 2-3 tag pendek (maksimal 3 kata per tag) untuk refleksi ini.
+6. Buat kutipan reflektif batin ("quote") yang menangkap suara hati terdalam pengguna dengan format terbagi:
    - "before": Awal kalimat
    - "highlight": Kata-kata kunci emosional yang diakui dengan berani
    - "after": Akhir kalimat
-4. Tentukan 1 "primaryNeed" (kebutuhan utama penenang batin, contoh: "Istirahat tanpa merasa bersalah & menjaga batasan sehat").
-5. Tentukan 1 "bodyState" (kondisi tubuh yang mulai lega, contoh: "Bahu mulai rileks & napas terasa lebih lapang").
-6. Buat 1 "microAction" realistis yang bisa dilakukan dalam waktu < 5 menit:
+7. Tentukan 1 "primaryNeed" (kebutuhan utama penenang batin, contoh: "Istirahat tanpa merasa bersalah & menjaga batasan sehat").
+8. Tentukan 1 "bodyState" (kondisi tubuh yang mulai lega, contoh: "Bahu mulai rileks & napas terasa lebih lapang").
+9. Buat 1 "microAction" realistis yang bisa dilakukan dalam waktu < 5 menit:
    - "categoryBadge": Nama kategori aksi (contoh: "Jangkar Hari Ini • Komunikasi Batasan")
    - "actionTitle": Judul langkah mikro (contoh: "Sampaikan Batasanmu dengan Tenang")
-   - "actionScript": Draf pesan sopan singkat yang bisa disalin pengguna untuk menyampaikan batas diri ke teman/tim.
-7. Buat "summary" empati 1-2 kalimat.
+   - "actionScript": Draf pesan sopan singkat yang bisa disalin pengguna untuk menyampaikan batas diri ke rekan/tim.
 
 KEMBALIKAN HANYA RESPONS BERUPA JSON MURNI (tanpa tag markdown \`\`\`json atau teks pembuka/penutup lainnya):
 {
@@ -53,6 +60,7 @@ KEMBALIKAN HANYA RESPONS BERUPA JSON MURNI (tanpa tag markdown \`\`\`json atau t
   ],
   "summary": "Ringkasan empati...",
   "needInsight": "Saran kebutuhan...",
+  "tags": ["Jeda Sejenak", "Batasan Diri", "Refleksi"],
   "quote": {
     "before": "Aku bukan takut bekerja keras; ",
     "highlight": "aku hanya takut pada kesunyian",
@@ -93,7 +101,7 @@ KEMBALIKAN HANYA RESPONS BERUPA JSON MURNI (tanpa tag markdown \`\`\`json atau t
 
       parsed = JSON.parse(cleanedJson);
     } catch (aiError) {
-      console.warn('Gemini API call failed (likely 503/429 or quota). Using intelligent heuristic reflection fallback:', aiError);
+      console.warn('Gemini API call failed (likely quota or network). Using intelligent heuristic reflection fallback:', aiError);
       parsed = generateFallbackReflection(text);
     }
 
@@ -126,6 +134,7 @@ function generateFallbackReflection(text: string) {
     ],
     summary: 'Kamu sedang memikul banyak hal sekaligus. Wajar jika tubuh dan pikiranmu merasa lelah.',
     needInsight: 'Mungkin ada kebutuhan untuk beristirahat tanpa rasa bersalah dan membagikan batasan yang jelas.',
+    tags: ['Refleksi Mandiri', 'Urai Beban', 'Jeda Sejenak'],
     quote: {
       before: 'Aku bukan menyerah; ',
       highlight: 'aku hanya butuh jeda sejenak',

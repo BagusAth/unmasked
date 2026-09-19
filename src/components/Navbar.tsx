@@ -11,7 +11,7 @@ const FlagEN = () => <GB className="w-4 h-3 border border-gray-200" />;
 interface NavbarProps {
   onStartClick?: () => void;
   isLoading?: boolean;
-  activePage?: 'home' | 'journey' | 'canvas' | 'my-space' | 'myspace' | 'support';
+  activePage?: 'home' | 'journey' | 'canvas' | 'my-space' | 'myspace' | 'support' | 'load';
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ 
@@ -26,7 +26,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isHomeActive = activePage === 'home';
   const isJourneyActive = activePage === 'journey';
   const isCanvasActive = activePage === 'canvas';
-  const isMySpaceActive = activePage === 'my-space' || activePage === 'myspace';
+  const isMySpaceActive = activePage === 'my-space' || activePage === 'myspace' || activePage === 'load';
   const isSupportActive = activePage === 'support';
 
   return (
@@ -79,7 +79,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {t('nav.reflection_canvas')}
           </a>
           <a
-            href="/#privasi"
+            href="/load"
             className={`rounded-full px-3.5 py-1.5 transition-colors ${
               isMySpaceActive
                 ? 'bg-[#E8EFEA] font-bold text-[#284B3E]'
@@ -211,7 +211,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             {t('nav.reflection_canvas')}
           </a>
           <a
-            href="/#privasi"
+            href="/load"
             onClick={() => setIsMobileMenuOpen(false)}
             className={`block ${isMySpaceActive ? 'text-[#284B3E] font-bold' : 'hover:text-[#111827]'}`}
           >

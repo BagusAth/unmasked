@@ -1,9 +1,13 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import sessionRoutes from './routes/sessionRoutes.js';
 import aiRoutes from './routes/aiRoutes.js';
 
+// Support reading .env from the root directory since the user runs the server from root
+dotenv.config({ path: path.resolve(process.cwd(), '../.env') });
+// Also try current dir just in case
 dotenv.config();
 
 const app = express();
