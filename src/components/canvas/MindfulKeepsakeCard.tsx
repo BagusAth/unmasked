@@ -159,13 +159,13 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, delay: 0.3 }}
-      className="w-full bg-gradient-to-r from-[#F4F5F0] via-[#F8FAF8] to-[#FAF9F6] rounded-2xl sm:rounded-[28px] p-6 sm:p-10 shadow-sm border border-[#E2E8F0] relative overflow-hidden"
+      className="w-full bg-gradient-to-r from-[#F4F5F0] via-[#F8FAF8] to-[#FAF9F6] rounded-2xl sm:rounded-[28px] p-6 sm:p-10 shadow-[0_4px_20px_-2px_rgba(30,41,59,0.04),0_12px_32px_-4px_rgba(74,107,93,0.05)] border border-[#E8E8E2] relative overflow-hidden"
     >
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 relative z-10">
-        {/* Left: Graphic Card Mockup */}
+        {/* Left: Tactile Graphic Card Mockup */}
         <div
           ref={cardRef}
-          className="w-full max-w-md bg-white p-6 sm:p-7 rounded-2xl shadow-md border border-[#E2E8F0] flex flex-col justify-between gap-6 relative overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
+          className="w-full max-w-md bg-white p-6 sm:p-7 rounded-2xl sm:rounded-3xl shadow-[0_12px_32px_-4px_rgba(74,107,93,0.12),0_4px_16px_-2px_rgba(30,41,59,0.06)] border border-[#E2E8F0] flex flex-col justify-between gap-6 relative overflow-hidden transition-transform duration-300 hover:scale-[1.01]"
         >
           {/* Top Row: Dots + Header + Date */}
           <div className="flex items-center justify-between">
@@ -182,7 +182,7 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
           </div>
 
           {/* Quote Body */}
-          <div className="flex flex-col gap-1.5 my-1">
+          <div className="flex flex-col gap-2 my-1">
             <span className="text-[11px] font-bold text-[#C86D51] uppercase tracking-widest">
               IZIN UNTUK DIRI SENDIRI HARI INI
             </span>
@@ -192,7 +192,7 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
           </div>
 
           {/* Card Bottom Strip */}
-          <div className="flex items-center justify-between pt-3 border-t border-[#F1F5F9] text-xs text-[#64748B]">
+          <div className="flex items-center justify-between pt-3.5 border-t border-[#F1F5F9] text-xs text-[#64748B]">
             <span>Ruang Refleksi • Tersimpan di Perangkat Ini</span>
             <BadgeCheck size={16} className="text-[#284B3E]" />
           </div>
@@ -202,13 +202,13 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
         <div className="flex flex-col gap-4 max-w-xl text-left">
           <div className="flex flex-col gap-1.5">
             <span className="text-xs font-bold text-[#284B3E] uppercase tracking-wider">
-              KARTU PENGINGAT HARIAN
+              Simpan untuk Hari-Hari Berikutnya
             </span>
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#111827]">
               Simpan satu hal yang ingin kamu ingat dari hari ini.
             </h2>
             <p className="text-sm sm:text-base text-[#525F7F] leading-relaxed mt-1">
-              Kadang kita tidak butuh jawaban baru. Cukup satu hal yang ingin kita ingat setelah berhenti sejenak.
+              Kadang kita tidak butuh jawaban baru. Cukup satu hal yang ingin kita ingat setelah berhenti sejenak. Unduh sebagai kartu untuk disimpan di galeri atau salin draf aksi untuk dikirimkan.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
           <div className="flex flex-wrap gap-3 pt-2">
             <button
               onClick={handleDownloadPng}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#284B3E] hover:bg-[#1E3A30] text-white text-xs sm:text-sm font-semibold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#284B3E] hover:bg-[#1E3A30] text-white text-xs sm:text-sm font-semibold shadow-xs transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               <Download size={16} />
               <span>Unduh Kartu Pengingat (.PNG)</span>

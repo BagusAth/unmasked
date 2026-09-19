@@ -55,11 +55,11 @@ export const CanvasHeader: React.FC<CanvasHeaderProps> = ({
           transition={{ duration: 0.4, delay: 0.1 }}
           className="flex items-center gap-2.5 flex-wrap"
         >
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#284B3E] shadow-2xs border border-[#E2E8F0] text-xs font-semibold">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#284B3E] shadow-2xs border border-[#DCE6E0] text-xs font-semibold">
             <BadgeCheck size={16} className="text-[#284B3E]" />
             <span>Refleksi selesai</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F4F5F0] text-[#525F7F] border border-[#E8E8E2] text-xs font-medium">
+          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F4F5F0] text-[#525F7F] border border-[#E2E8F0] text-xs font-medium shadow-2xs">
             <Lock size={14} className="text-[#284B3E]" />
             <span>Tersimpan di perangkat ini</span>
           </span>
