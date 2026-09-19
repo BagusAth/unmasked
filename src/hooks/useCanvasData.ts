@@ -3,7 +3,6 @@ import type { FullReflectionSession } from '../types/session';
 
 const ACTIVE_SESSION_KEY = 'unmasked_active_session';
 const VAULT_KEY = 'unmasked_reflections';
-const COMMITMENT_KEY = 'unmasked_commitment_done';
 
 export const useCanvasData = () => {
   const [session, setSession] = useState<FullReflectionSession | null>(() => {
@@ -12,11 +11,7 @@ export const useCanvasData = () => {
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed?.mask && parsed?.load && parsed?.need && parsed?.action) {
-          const isDone = typeof window !== 'undefined' && localStorage.getItem(COMMITMENT_KEY) === 'true';
-          return {
-            ...parsed,
-            action: { ...parsed.action, isCompleted: isDone },
-          } as FullReflectionSession;
+          return parsed as FullReflectionSession;
         }
       }
     } catch (e) {
@@ -25,13 +20,8 @@ export const useCanvasData = () => {
     return null;
   });
 
-  // Update micro-commitment status
+  // Update micro-commitment status (single source of truth in session)
   const updateCommitment = useCallback((isCompleted: boolean) => {
-    try {
-      localStorage.setItem(COMMITMENT_KEY, String(isCompleted));
-    } catch (e) {
-      console.warn('Could not write commitment key:', e);
-    }
     setSession((prev) => {
       if (!prev) return null;
       const updated = {
@@ -77,6 +67,7 @@ export const useCanvasData = () => {
         actionTitle: session.action.actionTitle,
         actionCompleted: session.action.isCompleted,
         createdAt: new Date().toISOString(),
+        fullSession: session,
       };
 
       // Push to front of list, avoid exact duplicate ids
@@ -92,13 +83,12 @@ export const useCanvasData = () => {
     }
   }, [session]);
 
-  // Clear current active session & RAM
+  // Clear current active session & RAM (without touching saved vault)
   const clearSession = useCallback(() => {
     try {
       localStorage.removeItem(ACTIVE_SESSION_KEY);
-      localStorage.removeItem(COMMITMENT_KEY);
     } catch (e) {
-      console.warn('Could not clear session storage:', e);
+      console.warn('Could not clear active session storage:', e);
     }
     setSession(null);
   }, []);
@@ -130,6 +120,9 @@ export const useCanvasData = () => {
             { id: 's1', text: 'Menulis 1 paragraf latar belakang hari ini', badge: 'Sore ini', category: 'within' },
             { id: 's2', text: 'Merapikan daftar pustaka 5 jurnal acuan', badge: 'Malam ini', category: 'within' },
             { id: 's3', text: 'Kirim draf revisi bab 2 ke dosen pembimbing', badge: 'Draf siap', category: 'within' },
+          ],
+          influenceControlItems: [
+            { id: 's-inf1', text: 'Kirim chat sopan ke dosen untuk konfirmasi jadwal bimbingan minggu depan', badge: 'Perlu Chat', category: 'influence' },
           ],
           outsideControlItems: [
             { id: 's4', text: 'Kecepatan respon email dan jadwal senggang dosen pembimbing', badge: 'Relakan dulu', category: 'outside' },
@@ -170,6 +163,9 @@ export const useCanvasData = () => {
           withinControlItems: [
             { id: 'o1', text: 'Mendelegasikan rundown acara ke wakil koordinator', badge: 'Hari ini', category: 'within' },
             { id: 'o2', text: 'Matikan notifikasi grup WhatsApp kepanitiaan jam 21:00', badge: 'Malam ini', category: 'within' },
+          ],
+          influenceControlItems: [
+            { id: 'o-inf1', text: 'Bicarakan pembagian shift jaga stand bersama rekan satu tim', badge: 'Perlu Diskusi', category: 'influence' },
           ],
           outsideControlItems: [
             { id: 'o3', text: 'Keterlambatan konfirmasi kehadiran pihak eksternal', badge: 'Relakan dulu', category: 'outside' },

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckSquare, Circle, CheckCircle2, Flower2 } from 'lucide-react';
 
@@ -7,6 +7,7 @@ interface MicroCommitmentCardProps {
   actionTitle?: string;
   actionScript?: string;
   helperNote?: string;
+  isCompleted?: boolean;
   onStatusChange?: (isCompleted: boolean) => void;
 }
 
@@ -15,18 +16,12 @@ export const MicroCommitmentCard: React.FC<MicroCommitmentCardProps> = ({
   actionTitle = 'Sampaikan Batasanmu dengan Tenang',
   actionScript = '“Halo rekan-rekan tim, izin malam ini aku istirahat duluan ya untuk memulihkan kondisi. Pembahasan tugas kita lanjutkan besok pagi. Terima kasih banyak atas pengertiannya.”',
   helperNote = 'Kirim kapan pun kamu merasa siap dan tenang',
+  isCompleted = false,
   onStatusChange,
 }) => {
-  const [isCompleted, setIsCompleted] = useState<boolean>(() => {
-    return localStorage.getItem('unmasked_commitment_done') === 'true';
-  });
-
   const handleToggle = () => {
-    const nextState = !isCompleted;
-    setIsCompleted(nextState);
-    localStorage.setItem('unmasked_commitment_done', String(nextState));
     if (onStatusChange) {
-      onStatusChange(nextState);
+      onStatusChange(!isCompleted);
     }
   };
 
@@ -101,7 +96,7 @@ export const MicroCommitmentCard: React.FC<MicroCommitmentCardProps> = ({
                 exit={{ opacity: 0, height: 0 }}
                 className="text-center text-[#284B3E] text-xs font-semibold pt-1"
               >
-                Langkah kecil yang sangat berharga! Istirahatlah dengan tenang.
+                Langkah ini sudah kamu tandai sebagai selesai.
               </motion.div>
             )}
           </AnimatePresence>

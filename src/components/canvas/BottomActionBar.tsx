@@ -31,7 +31,7 @@ export const BottomActionBar: React.FC<BottomActionBarProps> = ({
             Ruang Pribadi
           </span>
           <span className="text-xs text-[#64748B] leading-snug">
-            Semua tulisan ini tersimpan aman di perambanmu dan tidak pernah dikirim ke server mana pun.
+            Data refleksimu disimpan di perangkat ini melalui penyimpanan lokal browser. Pemrosesan AI berlangsung tanpa menyimpan catatan pribadimu di server.
           </span>
         </div>
       </div>

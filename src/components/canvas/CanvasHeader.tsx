@@ -57,7 +57,7 @@ export const CanvasHeader: React.FC<CanvasHeaderProps> = ({
         >
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-[#284B3E] shadow-2xs border border-[#E2E8F0] text-xs font-semibold">
             <BadgeCheck size={16} className="text-[#284B3E]" />
-            <span>Selesai berefleksi • Tenang & rileks</span>
+            <span>Refleksi selesai</span>
           </span>
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F4F5F0] text-[#525F7F] border border-[#E8E8E2] text-xs font-medium">
             <Lock size={14} className="text-[#284B3E]" />

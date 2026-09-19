@@ -69,6 +69,7 @@ export const sessionJourney = {
 
     // Petakan burdens dari AI ke Circle of Control
     const withinControlItems: BurdenItem[] = [];
+    const influenceControlItems: BurdenItem[] = [];
     const outsideControlItems: BurdenItem[] = [];
 
     aiData.burdens.forEach((item, index) => {
@@ -76,10 +77,17 @@ export const sessionJourney = {
         id: `burden-${Date.now()}-${index}`,
         text: item.text,
         category: item.category,
-        badge: item.category === 'within' ? 'Dalam Kendali' : 'Di Luar Kendali',
+        badge:
+          item.category === 'within'
+            ? 'Bisa Sekarang'
+            : item.category === 'influence'
+            ? 'Perlu Dikomunikasikan'
+            : 'Relakan Dulu',
       };
       if (item.category === 'outside') {
         outsideControlItems.push(burden);
+      } else if (item.category === 'influence') {
+        influenceControlItems.push(burden);
       } else {
         withinControlItems.push(burden);
       }
@@ -88,6 +96,7 @@ export const sessionJourney = {
     const loadData: LoadSessionData = {
       brainDump,
       withinControlItems,
+      influenceControlItems,
       outsideControlItems,
     };
 
@@ -187,6 +196,7 @@ export const sessionJourney = {
       },
       load: current.load || {
         withinControlItems: [],
+        influenceControlItems: [],
         outsideControlItems: [],
       },
       need: current.need || {

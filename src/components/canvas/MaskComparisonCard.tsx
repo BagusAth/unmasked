@@ -65,7 +65,7 @@ export const MaskComparisonCard: React.FC<MaskComparisonCardProps> = ({
           <div className="bg-[#FFF6F3] rounded-xl p-4 sm:p-5 border border-[#FCDDD3] flex flex-col justify-between gap-3">
             <div className="flex items-center gap-1.5 text-[#C86D51] text-xs font-semibold uppercase tracking-wider">
               <Brain size={14} className="text-[#C86D51]" />
-              <span>Yang Sebenarnya Dirasakan</span>
+              <span>Yang Ada di Balik Topeng</span>
             </div>
             <p className="text-sm sm:text-base font-semibold text-[#97472E] leading-snug">
               {innerFeelingText}

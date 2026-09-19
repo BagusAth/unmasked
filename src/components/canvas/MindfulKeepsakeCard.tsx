@@ -20,7 +20,7 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
   // High-DPI Canvas Rendering for Clean PNG Download
   const handleDownloadPng = () => {
     try {
-      onShowToast('Memproses kartu refleksi beresolusi tinggi (.PNG)...', 'download');
+      onShowToast('Memproses kartu pengingat beresolusi tinggi (.PNG)...', 'download');
 
       const canvas = document.createElement('canvas');
       const width = 800;
@@ -121,14 +121,14 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
       // Trigger Download
       setTimeout(() => {
         const link = document.createElement('a');
-        link.download = `kartu-refleksi-unmasked-${Date.now()}.png`;
+        link.download = `kartu-pengingat-unmasked-${Date.now()}.png`;
         link.href = canvas.toDataURL('image/png');
         link.click();
-        onShowToast('Kartu refleksi tersimpan di folder Unduhan perangkatmu.', 'download');
+        onShowToast('Kartu pengingat tersimpan di folder Unduhan perangkatmu.', 'download');
       }, 600);
     } catch (err) {
       console.error('Download failed:', err);
-      onShowToast('Gagal memproses kartu refleksi.', 'security');
+      onShowToast('Gagal memproses kartu pengingat.', 'security');
     }
   };
 
@@ -213,7 +213,7 @@ export const MindfulKeepsakeCard: React.FC<MindfulKeepsakeCardProps> = ({
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#284B3E] hover:bg-[#1E3A30] text-white text-xs sm:text-sm font-semibold shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               <Download size={16} />
-              <span>Unduh Kartu Refleksi (.PNG)</span>
+              <span>Unduh Kartu Pengingat (.PNG)</span>
             </button>
 
             <button

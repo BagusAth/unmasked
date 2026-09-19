@@ -55,7 +55,7 @@ export const CoreRealizationCard: React.FC<CoreRealizationCardProps> = ({
           {/* Primary Need */}
           <div className="flex flex-col gap-1">
             <span className="text-[11px] font-semibold text-[#64748B] uppercase tracking-wider">
-              Kebutuhan Utama
+              Yang Mungkin Sedang Kubutuhkan
             </span>
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FBE9E3] text-[#97472E] text-xs sm:text-sm font-semibold shadow-2xs">
               <Flower2 size={15} className="text-[#C86D51]" />

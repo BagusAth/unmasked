@@ -48,6 +48,7 @@ export interface BurdenItem {
 export interface LoadSessionData {
   brainDump?: string;
   withinControlItems: BurdenItem[];
+  influenceControlItems: BurdenItem[];
   outsideControlItems: BurdenItem[];
 }
 
