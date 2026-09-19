@@ -5,55 +5,14 @@ const ACTIVE_SESSION_KEY = 'unmasked_active_session';
 const VAULT_KEY = 'unmasked_reflections';
 const COMMITMENT_KEY = 'unmasked_commitment_done';
 
-export const DEFAULT_FALLBACK_SESSION: FullReflectionSession = {
-  sessionId: 'demo-session-default',
-  dateString: '14 November 2024 • Catatan Refleksi',
-  durationMinutes: 12,
-  mask: {
-    publicPersonaText: '“Mahasiswa yang selalu kelihatan baik-baik saja dan bisa diandalkan”',
-    publicTags: ['Kelihatan selalu tenang', 'Selalu ada untuk teman'],
-    innerFeelingText: '“Kelelahan batin yang sunyi dan cemas kalau berhenti sejenak.”',
-    innerTags: ['Kewalahan & butuh jeda', 'Takut dianggap tidak mampu'],
-    validationMessage:
-      'Terima kasih sudah mau jujur pada diri sendiri hari ini. Mengakui bahwa kamu lelah adalah langkah awal yang berani, bukan tanda kelemahan.',
-  },
-  load: {
-    withinControlItems: [
-      { id: '1', text: 'Fokus 1 jam cicil kerangka tugas atau bahan bacaan', badge: 'Malam ini', category: 'within' },
-      { id: '2', text: 'Kirim chat sopan ke dosen untuk minta sedikit perpanjangan waktu', badge: 'Draf siap', category: 'within' },
-      { id: '3', text: 'Tutup laptop jam 22:30 tanpa kompromi untuk tidur', badge: 'Batasan sehat', category: 'within' },
-    ],
-    outsideControlItems: [
-      { id: '4', text: 'Omongan atau ekspektasi teman sekelas soal nilai ujian', badge: 'Relakan dulu', category: 'outside' },
-      { id: '5', text: 'Keputusan penilaian atau tugas dadakan yang di luar kendali', badge: 'Relakan dulu', category: 'outside' },
-    ],
-  },
-  need: {
-    quoteBefore: '“Aku bukan takut bekerja keras; ',
-    quoteHighlight: 'aku hanya takut pada kesunyian',
-    quoteAfter: ' saat berhenti memaksakan diri tampil sempurna di depan orang lain.”',
-    primaryNeed: 'Istirahat tanpa merasa bersalah & menjaga batasan sehat',
-    bodyState: 'Bahu mulai rileks & napas terasa lebih lega',
-  },
-  action: {
-    categoryBadge: 'Jangkar Hari Ini • Komunikasi Batasan',
-    actionTitle: 'Sampaikan Batasanmu dengan Tenang',
-    actionScript:
-      '“Halo rekan-rekan tim, izin malam ini aku istirahat duluan ya untuk memulihkan kondisi. Pembahasan tugas kita lanjutkan besok pagi. Terima kasih banyak atas pengertiannya.”',
-    helperNote: 'Kirim kapan pun kamu merasa siap dan tenang',
-    isCompleted: false,
-  },
-  createdAt: new Date().toISOString(),
-};
-
 export const useCanvasData = () => {
-  const [session, setSession] = useState<FullReflectionSession>(() => {
-    const isDone = typeof window !== 'undefined' && localStorage.getItem(COMMITMENT_KEY) === 'true';
+  const [session, setSession] = useState<FullReflectionSession | null>(() => {
     try {
-      const saved = localStorage.getItem(ACTIVE_SESSION_KEY);
+      const saved = typeof window !== 'undefined' ? localStorage.getItem(ACTIVE_SESSION_KEY) : null;
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed?.mask && parsed?.load && parsed?.need && parsed?.action) {
+          const isDone = typeof window !== 'undefined' && localStorage.getItem(COMMITMENT_KEY) === 'true';
           return {
             ...parsed,
             action: { ...parsed.action, isCompleted: isDone },
@@ -61,29 +20,31 @@ export const useCanvasData = () => {
         }
       }
     } catch (e) {
-      console.warn('Could not read active session, using fallback:', e);
+      console.warn('Could not read active session:', e);
     }
-    return {
-      ...DEFAULT_FALLBACK_SESSION,
-      action: { ...DEFAULT_FALLBACK_SESSION.action, isCompleted: isDone },
-    };
-  });
-
-  const [isUsingFallback, setIsUsingFallback] = useState<boolean>(() => {
-    return typeof window !== 'undefined' && !localStorage.getItem(ACTIVE_SESSION_KEY);
+    return null;
   });
 
   // Update micro-commitment status
   const updateCommitment = useCallback((isCompleted: boolean) => {
-    localStorage.setItem(COMMITMENT_KEY, String(isCompleted));
+    try {
+      localStorage.setItem(COMMITMENT_KEY, String(isCompleted));
+    } catch (e) {
+      console.warn('Could not write commitment key:', e);
+    }
     setSession((prev) => {
+      if (!prev) return null;
       const updated = {
         ...prev,
         action: { ...prev.action, isCompleted },
       };
       // If we have an active session, update it in localStorage
-      if (localStorage.getItem(ACTIVE_SESSION_KEY)) {
-        localStorage.setItem(ACTIVE_SESSION_KEY, JSON.stringify(updated));
+      try {
+        if (localStorage.getItem(ACTIVE_SESSION_KEY)) {
+          localStorage.setItem(ACTIVE_SESSION_KEY, JSON.stringify(updated));
+        }
+      } catch (e) {
+        console.warn('Could not update active session:', e);
       }
       return updated;
     });
@@ -91,6 +52,7 @@ export const useCanvasData = () => {
 
   // Save current reflection session to Ruang Pribadi (local vault)
   const saveToVault = useCallback((): boolean => {
+    if (!session) return false;
     try {
       const savedVault = localStorage.getItem(VAULT_KEY);
       const vaultList = savedVault ? JSON.parse(savedVault) : [];
@@ -132,10 +94,13 @@ export const useCanvasData = () => {
 
   // Clear current active session & RAM
   const clearSession = useCallback(() => {
-    localStorage.removeItem(ACTIVE_SESSION_KEY);
-    localStorage.removeItem(COMMITMENT_KEY);
-    setSession(DEFAULT_FALLBACK_SESSION);
-    setIsUsingFallback(true);
+    try {
+      localStorage.removeItem(ACTIVE_SESSION_KEY);
+      localStorage.removeItem(COMMITMENT_KEY);
+    } catch (e) {
+      console.warn('Could not clear session storage:', e);
+    }
+    setSession(null);
   }, []);
 
   // Seed sample data for testing/demoing dynamic transitions
@@ -231,12 +196,11 @@ export const useCanvasData = () => {
 
     localStorage.setItem(ACTIVE_SESSION_KEY, JSON.stringify(sampleSession));
     setSession(sampleSession);
-    setIsUsingFallback(false);
   }, [clearSession]);
 
   return {
     session,
-    isUsingFallback,
+    hasActiveSession: session !== null,
     updateCommitment,
     saveToVault,
     clearSession,
