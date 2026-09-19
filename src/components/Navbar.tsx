@@ -1,16 +1,24 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X, ShieldCheck, User } from 'lucide-react';
 import logoImg from '../assets/unmasked-logo-notext.png';
 
 interface NavbarProps {
   onStartClick?: () => void;
   isLoading?: boolean;
+  activePage?: 'home' | 'support' | 'journey' | 'canvas' | 'myspace';
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false }) => {
+export const Navbar: React.FC<NavbarProps> = ({ 
+  onStartClick, 
+  isLoading = false,
+  activePage = 'home'
+}) => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [currentLang, setCurrentLang] = useState<'ID' | 'EN'>('ID');
+
+  const isSupportActive = activePage === 'support';
+  const isHomeActive = activePage === 'home';
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/90 backdrop-blur-md border-b border-[#F0EFEB] transition-all">
@@ -31,48 +39,78 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
 
         {/* Center: Navigation Pill Links (Desktop) */}
         <nav className="hidden md:flex items-center gap-1.5 rounded-full border border-[#E9E8E3] bg-[#FAF9F5]/70 p-1 text-xs font-medium text-[#5B6376] shadow-2xs">
-          {/* Active 'Beranda' Pill */}
           <a
             href="/"
-            className="rounded-full bg-[#E8EEFB] px-4 py-1.5 font-semibold text-[#2563EB] transition-colors"
+            className={`rounded-full px-4 py-1.5 transition-colors ${
+              isHomeActive
+                ? 'bg-[#E8EEFB] font-semibold text-[#2563EB]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
           >
             Beranda
           </a>
           <a
-            href="#alur"
+            href="/#alur"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
             Alur Refleksi
           </a>
-          <button
-            onClick={onStartClick}
-            disabled={isLoading}
+          <a
+            href="/summary"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors cursor-pointer"
           >
-            Kanvas Refleksi
-          </button>
+            Kanvas Kejujuran
+          </a>
           <a
-            href="#privasi"
+            href="/#privasi"
             className="rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
           >
             Ruang Pribadi
           </a>
           <a
-            href="#krisis"
-            className="flex items-center gap-1.5 rounded-full px-3.5 py-1.5 hover:text-[#111827] hover:bg-white/60 transition-colors"
+            href="/support"
+            className={`flex items-center gap-1.5 rounded-full px-4 py-1.5 transition-colors ${
+              isSupportActive
+                ? 'bg-[#E8EEFB] font-semibold text-[#2563EB]'
+                : 'hover:text-[#111827] hover:bg-white/60'
+            }`}
           >
             <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
             <span>Bantuan Krisis</span>
           </a>
         </nav>
 
-        {/* Right: Language Selector & Mobile Hamburger */}
-        <div className="flex items-center gap-3">
+        {/* Right: Anonymity Pill, CTA, User icon & Language Selector */}
+        <div className="flex items-center gap-2.5">
+          {/* Anonymity Pill */}
+          <div className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-[#DFE3EA] bg-white px-3 py-1.5 text-xs text-[#525F7F] shadow-2xs">
+            <ShieldCheck size={14} className="text-[#10B981]" />
+            <span className="font-medium">100% Anonim + Berjalan Lokal</span>
+          </div>
+
+          {/* Quick Start Reflection Pill */}
+          <button
+            onClick={onStartClick}
+            disabled={isLoading}
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#284B3E] hover:bg-[#1E3A30] text-white px-4 py-1.5 text-xs font-semibold shadow-xs transition active:scale-[0.98] cursor-pointer"
+          >
+            <span>Mulai Refleksi</span>
+          </button>
+
+          {/* User Icon Circle */}
+          <button
+            type="button"
+            title="Profil Pengguna"
+            className="hidden sm:flex h-8 w-8 rounded-full border border-[#E2E8F0] bg-white hover:bg-neutral-50 items-center justify-center text-[#475569] transition cursor-pointer"
+          >
+            <User size={15} />
+          </button>
+
           {/* Language Switcher */}
           <div className="relative">
             <button
               onClick={() => setIsLangOpen(!isLangOpen)}
-              className="flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-3 py-1 text-xs font-medium text-[#374151] hover:bg-neutral-50 shadow-2xs transition"
+              className="flex items-center gap-1.5 rounded-full border border-[#E5E7EB] bg-white px-2.5 py-1 text-xs font-medium text-[#374151] hover:bg-neutral-50 shadow-2xs transition"
             >
               <span>{currentLang === 'ID' ? '🇮🇩' : '🇬🇧'}</span>
               <span>{currentLang}</span>
@@ -125,39 +163,37 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
           <a
             href="/"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="block text-[#2563EB] font-semibold"
+            className={`block ${isHomeActive ? 'text-[#2563EB] font-bold' : 'hover:text-[#111827]'}`}
           >
             Beranda
           </a>
           <a
-            href="#alur"
+            href="/#alur"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block hover:text-[#111827]"
           >
             Alur Refleksi
           </a>
-          <button
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              onStartClick?.();
-            }}
+          <a
+            href="/summary"
+            onClick={() => setIsMobileMenuOpen(false)}
             className="block text-left w-full hover:text-[#111827]"
           >
-            Kanvas Refleksi
-          </button>
+            Kanvas Kejujuran
+          </a>
           <a
-            href="#privasi"
+            href="/#privasi"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block hover:text-[#111827]"
           >
             Ruang Pribadi
           </a>
           <a
-            href="#krisis"
+            href="/support"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="flex items-center gap-2 text-rose-600 font-semibold"
+            className={`flex items-center gap-2 ${isSupportActive ? 'text-[#2563EB] font-bold' : 'text-rose-600 font-semibold'}`}
           >
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
+            <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
             <span>Bantuan Krisis</span>
           </a>
         </div>
@@ -165,3 +201,4 @@ export const Navbar: React.FC<NavbarProps> = ({ onStartClick, isLoading = false 
     </header>
   );
 };
+

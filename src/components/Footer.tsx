@@ -14,12 +14,12 @@ export const Footer: React.FC = () => {
             Sedang menghadapi situasi darurat?
           </span>
           <span className="font-bold">Hotline Kemenkes: 119</span>
-          <button
-            onClick={() => setShowHotlineModal(true)}
-            className="ml-1 underline font-semibold hover:text-[#7C2D12] transition cursor-pointer"
+          <a
+            href="/support"
+            className="ml-1 underline font-semibold hover:text-[#7C2D12] transition"
           >
-            Lihat daftar bantuan lengkap
-          </button>
+            Lihat daftar bantuan lengkap & Safe Harbor →
+          </a>
         </div>
       </section>
 
