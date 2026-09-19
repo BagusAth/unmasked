@@ -39,7 +39,7 @@ export const CampusCounselingGuide: React.FC = () => {
         <span className="text-xs font-semibold uppercase tracking-widest text-[#284B3E]">
           Akses Layanan Akademik
         </span>
-        <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] mt-1">
+        <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] mt-1">
           Panduan Praktis Menghubungi Konseling Kampus (BKM)
         </h3>
         <p className="text-xs sm:text-sm text-[#64748B] mt-1 max-w-2xl">

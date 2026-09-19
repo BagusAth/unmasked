@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, Menu, X, ShieldCheck, User } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
 import logoImg from '../assets/unmasked-logo-notext.png';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -103,11 +103,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right: Anonymity Pill, CTA, User icon & Language Selector */}
         <div className="flex items-center gap-2.5">
-          {/* Anonymity Pill */}
-          <div className="hidden lg:inline-flex items-center gap-1.5 rounded-full border border-[#DFE3EA] bg-white px-3 py-1.5 text-xs text-[#525F7F] shadow-2xs">
-            <ShieldCheck size={14} className="text-[#10B981]" />
-            <span className="font-medium">100% Anonim + Berjalan Lokal</span>
-          </div>
 
           {/* Quick Start Reflection Pill */}
           {onStartClick && (
@@ -120,14 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          {/* User Icon Circle */}
-          <button
-            type="button"
-            title="Profil Pengguna"
-            className="hidden sm:flex h-8 w-8 rounded-full border border-[#E2E8F0] bg-white hover:bg-neutral-50 items-center justify-center text-[#475569] transition cursor-pointer"
-          >
-            <User size={15} />
-          </button>
+
 
           {/* Language Switcher */}
           <div className="relative">

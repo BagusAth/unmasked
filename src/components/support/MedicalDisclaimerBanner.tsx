@@ -19,7 +19,7 @@ export const MedicalDisclaimerBanner: React.FC = () => {
               <span>Standar Etika & Batasan Platform Digital</span>
             </div>
 
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] leading-snug">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] leading-snug">
               Batas Kemampuan Platform & Panduan Konsultasi Profesional
             </h3>
 

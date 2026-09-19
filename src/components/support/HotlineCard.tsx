@@ -29,7 +29,7 @@ export const HotlineSection: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] leading-tight mb-4">
               Layanan Kesehatan Jiwa SEJIWA (KemenPPPA & BNPB)
             </h3>
 
@@ -96,7 +96,7 @@ export const HotlineSection: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] leading-tight mb-4">
               Halo Kemenkes
             </h3>
 
@@ -156,7 +156,7 @@ export const HotlineSection: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] leading-tight mb-4">
               Yayasan Pulih (Pemulihan Trauma & Konseling)
             </h3>
 
@@ -202,7 +202,7 @@ export const HotlineSection: React.FC = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#111827] leading-tight mb-4">
+            <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.03em] text-[#111827] leading-tight mb-4">
               Into The Light Indonesia
             </h3>
 

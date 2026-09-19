@@ -6,19 +6,12 @@ import { HotlineSection } from '../components/support/HotlineCard';
 import { StandaloneGroundingTool } from '../components/support/StandaloneGroundingTool';
 import { CampusCounselingGuide } from '../components/support/CampusCounselingGuide';
 import { MedicalDisclaimerBanner } from '../components/support/MedicalDisclaimerBanner';
-import { useSession } from '../hooks/useSession';
 
 const Support: React.FC = () => {
-  const { isLoading, startSession } = useSession();
-
-  const handleStart = async () => {
-    await startSession({ fallbackToLocal: false });
-  };
-
   return (
     <div className="min-h-screen bg-[#FDFCF9] text-[#111827] flex flex-col font-sans selection:bg-[#284B3E]/15 selection:text-[#172033]">
       {/* 1. TOP NAVBAR */}
-      <Navbar onStartClick={handleStart} isLoading={isLoading} activePage="support" />
+      <Navbar activePage="support" />
 
       <main className="flex-1 pb-16">
         {/* 2. HERO SECTION */}
@@ -42,7 +35,7 @@ const Support: React.FC = () => {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-serif font-bold text-[#111827] tracking-tight leading-[1.2]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-semibold tracking-[-0.03em] text-[#111827] leading-[1.2]"
             >
               Kamu Tidak Harus Menghadapi<br />
               Semuanya Sendirian.

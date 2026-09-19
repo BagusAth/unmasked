@@ -189,7 +189,7 @@ export const StandaloneGroundingTool: React.FC = () => {
                     <Sparkles size={12} />
                     <span>Teknik Grounding 5-4-3-2-1</span>
                   </span>
-                  <h3 className="text-lg sm:text-xl font-serif font-bold text-[#111827] mt-2">
+                  <h3 className="text-lg sm:text-xl font-semibold tracking-[-0.03em] text-[#111827] mt-2">
                     Jangkar Panca Indera Saat Pikiran Terasa Kewalahan
                   </h3>
                 </div>
